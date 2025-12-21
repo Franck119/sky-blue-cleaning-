@@ -48,8 +48,8 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-lg">Email</h4>
-                  <p className="text-slate-600">hello@jet-clean.ci</p>
-                  <p className="text-slate-600">quotes@jet-clean.ci</p>
+                  <p className="text-slate-600">hello@skyblue-cleaning.com</p>
+                  <p className="text-slate-600">quotes@skyblue-cleaning.com</p>
                 </div>
               </div>
             </div>
@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
                   <option>Commercial Cleaning</option>
                   <option>Industrial Sanitation</option>
                   <option>Post-Construction</option>
-                  <option>Aviation / Car Wash</option>
+                  <option>Specialized Jet Cleaning</option>
                   <option>Custom Package</option>
                 </select>
               </div>
