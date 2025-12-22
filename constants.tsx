@@ -121,7 +121,7 @@ export const SERVICES: Service[] = [
   {
     id: 'com-5',
     title: { en: 'Kitchen & Grease Extraction', fr: 'Cuisine et Extraction de Graisse', ru: 'Кухонная Вытяжка и Жир' },
-    description: { en: 'Deep sanitation for commercial culinary hubs.', fr: 'Assainissement profond pour centres culinaires.', ru: 'Глубокая санитария для ресторанных кухонь.' },
+    description: { en: 'Deep sanitation for commercial culinary hubs.', fr: 'Assainissement profond pour centres culниnaires.', ru: 'Глубокая санитария для ресторанных кухонь.' },
     detailedDescription: { en: 'Fire-safe degreasing of ductwork and surgical cleaning of food preparation surfaces.', fr: 'Dégraissage des conduits coupe-feu.', ru: 'Пожаробезопасное обезжиривание воздуховодов и чистка поверхностей.' },
     icon: 'ChefHat',
     category: 'Commercial',
