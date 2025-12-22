@@ -33,7 +33,7 @@ export const SERVICES: Service[] = [
     detailedDescription: { en: 'Surgical-grade care for elite vehicles using pH-neutral chemicals and non-abrasive techniques.', fr: 'Soins de qualité chirurgicale pour véhicules d\'élite.', ru: 'Профессиональный уход за элитными авто с использованием pH-нейтральных средств.' },
     icon: 'Car',
     category: 'Specialized',
-    includedTasks: { en: ['Ceramic Coating', 'Steam Sanitization'], fr: ['Revêtement céramique', 'Bio-stérilisation'], ru: ['Керамическое покрытие', 'Паровая дезинфекция'] },
+    includedTasks: { en: ['Ceramic Coating', 'Steam Sanitization'], fr: ['Revêtement céramique', 'Bio-stérilisation'], ru: ['Керавическое покрытие', 'Паровая дезинфекция'] },
     specifications: { en: ['Scratch-free guarantee'], fr: ['Garantie sans rayures'], ru: ['Гарантия отсутствия царапин'] }
   },
   {
@@ -50,10 +50,10 @@ export const SERVICES: Service[] = [
     id: 'spec-3',
     title: { en: 'Clinic Bio-Sanitation', fr: 'Bio-Assainissement Clinique', ru: 'Био-санитария Клиник' },
     description: { en: 'Hospital-grade disinfection for medical facilities.', fr: 'Désinfection de qualité hospitalière.', ru: 'Больничная дезинфекция для медицинских учреждений.' },
-    detailedDescription: { en: 'Zero-tolerance pathogen control for surgical environments and diagnostic labs.', fr: 'Contrôle des agents pathogènes толérance zéro.', ru: 'Нулевая терпимость к патогенам в операционных и лабораториях.' },
+    detailedDescription: { en: 'Zero-tolerance pathogen control for surgical environments and diagnostic labs.', fr: 'Contrôle des agents pathogènes tolérance zéro.', ru: 'Нулевая терпимость к патогенам в операционных и лабораториях.' },
     icon: 'Activity',
     category: 'Specialized',
-    includedTasks: { en: ['UV-C Sterilization', 'Terminal Cleaning'], fr: ['Stérilisation UV-C', 'Nettoyage terminal'], ru: ['УФ-стерилизация', 'Терминальная уборка'] },
+    includedTasks: { en: ['UV-C Sterilization', 'Terminal Cleaning'], fr: ['Stérilisation UV-C', 'Nettoyage terminal'], ru: ['УФ-стерилизаци', 'Терминальная уборка'] },
     specifications: { en: ['ATP testing certified'], fr: ['Certifié tests ATP'], ru: ['Сертифицированные ATP-тесты'] }
   },
   {
@@ -161,7 +161,7 @@ export const SERVICES: Service[] = [
     specifications: { en: ['HACCP Compliant'], fr: ['Conforme HACCP'], ru: ['Соответствие HACCP'] }
   },
   {
-    id: 'sew-1', // Sewage logic filter in ServicesPage uses this prefix
+    id: 'sew-1', 
     title: { en: 'Waste-to-Gas Management', fr: 'Gestion Déchets-en-Gaz', ru: 'Утилизация Отходов в Газ' },
     description: { en: 'Transforming sewage into renewable domestic energy.', fr: 'Transformer les eaux usées en énergie.', ru: 'Превращение сточных вод в энергию.' },
     detailedDescription: { en: 'Our signature circular economy service using anaerobic digestion to produce purified biogas.', fr: 'Service d\'économie circulaire signature.', ru: 'Наш флагманский сервис по производству биогаза.' },
@@ -224,6 +224,21 @@ export const VALUES: Value[] = [
     title: { en: 'Absolute Reliability', fr: 'Fiabilité Absolue', ru: 'Абсолютная Надежность' },
     description: { en: '24/7 dedicated response teams for West Africa\'s most prestigious landmarks.', fr: 'Équipes d\'intervention dédiées 24h/24 et 7j/7.', ru: 'Круглосуточные группы реагирования для самых престижных объектов.' },
     icon: 'ShieldCheck'
+  },
+  {
+    title: { en: 'Artisanal Heritage', fr: 'Héritage Artisanal', ru: 'Ремесленное Наследие' },
+    description: { en: 'Combining traditional care techniques with modern chemical engineering.', fr: 'Alliant techniques de soins traditionnelles et génie chimique moderne.', ru: 'Сочетание традиционных методов ухода с современной химией.' },
+    icon: 'Award'
+  },
+  {
+    title: { en: 'Digital Traceability', fr: 'Traçabilité Numérique', ru: 'Цифровая Прослеживаемость' },
+    description: { en: 'Full digital audit trail of every sanitation cycle for compliance.', fr: 'Piste d\'audit numérique complète de chaque cycle d\'assainissement.', ru: 'Полный цифровой аудит каждого цикла санитарной обработки.' },
+    icon: 'Fingerprint'
+  },
+  {
+    title: { en: 'Biological Integrity', fr: 'Intégrité Biologique', ru: 'Биологическая Целостность' },
+    description: { en: 'Restoring surfaces to their original biological state without wear.', fr: 'Restaurer les surfaces à leur état biologique d\'origine sans usure.', ru: 'Восстановление поверхностей до их первоначального состояния.' },
+    icon: 'Zap'
   }
 ];
 
