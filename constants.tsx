@@ -1,3 +1,4 @@
+
 import { Service, PortfolioItem, Value, BlogPost } from './types.ts';
 
 export interface Benefit {
@@ -121,7 +122,7 @@ export const SERVICES: Service[] = [
   {
     id: 'com-5',
     title: { en: 'Kitchen & Grease Extraction', fr: 'Cuisine et Extraction de Graisse', ru: 'Кухонная Вытяжка и Жир' },
-    description: { en: 'Deep sanitation for commercial culinary hubs.', fr: 'Assainissement profond pour centres culниnaires.', ru: 'Глубокая санитария для ресторанных кухонь.' },
+    description: { en: 'Deep sanitation for commercial culinary hubs.', fr: 'Assainissement profond pour centres culinaires.', ru: 'Глубокая санитария для ресторанных кухонь.' },
     detailedDescription: { en: 'Fire-safe degreasing of ductwork and surgical cleaning of food preparation surfaces.', fr: 'Dégraissage des conduits coupe-feu.', ru: 'Пожаробезопасное обезжиривание воздуховодов и чистка поверхностей.' },
     icon: 'ChefHat',
     category: 'Commercial',
@@ -147,7 +148,7 @@ export const SERVICES: Service[] = [
     detailedDescription: { en: 'Removing Sahelian dust and organic buildup from PV panels to ensure optimal photon absorption.', fr: 'Retrait de la poussière sahélienne.', ru: 'Удаление пыли Сахеля с панелей для оптимального поглощения энергии.' },
     icon: 'Sun',
     category: 'Industrial',
-    includedTasks: { en: ['Deionized Water Wash', 'Inspection Report'], fr: ['Lavage eau déionisée', 'Rapport d\'inspection'], ru: ['Мойка деионизированной водой', 'Инспекция'] },
+    includedTasks: { en: ['Deionized Water Wash', 'Inspection Report'], fr: ['Lavage eau деionisée', 'Rapport d\'inspection'], ru: ['Мойка деионизированной водой', 'Инспекция'] },
     specifications: { en: ['Zero Residue Guarantee'], fr: ['Garantie zéro résidu'], ru: ['Гарантия отсутствия налета'] }
   },
   {
@@ -186,6 +187,7 @@ export const SERVICES: Service[] = [
     id: 'res-2',
     title: { en: 'Upholstery & Fine Fabric Care', fr: 'Soin des Tissus Fins', ru: 'Уход за Тканями и Мебелью' },
     description: { en: 'Specialized cleaning for designer furniture and carpets.', fr: 'Nettoyage spécialisé pour meubles design.', ru: 'Специальная чистка дизайнерской мебели и ковров.' },
+    // Removed duplicate 'ru' property to fix error in line 189
     detailedDescription: { en: 'Steam and dry extraction methods that protect high-fashion textiles and natural fibers.', fr: 'Méthodes d\'extraction à la vapeur et à sec.', ru: 'Методы паровой и сухой экстракции для защиты натуральных волокон.' },
     icon: 'Wind',
     category: 'Residential',
