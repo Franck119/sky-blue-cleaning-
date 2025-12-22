@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as LucideIcons from 'lucide-react';
 import PageHeader from '../components/PageHeader.tsx';
 import { SERVICES } from '../constants.tsx';
-import { ArrowRight, CheckCircle, ExternalLink, X, Shield, ListChecks, Zap, Info, PlayCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle, ExternalLink, X, Shield, ListChecks, Zap, Info } from 'lucide-react';
 import { useTranslation } from '../LanguageContext.tsx';
 import { Service } from '../types.ts';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -29,22 +29,21 @@ const CategorySection: React.FC<{
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         {services.map((service, idx) => {
           const IconComponent = (LucideIcons as any)[service.icon];
-          // Use specific high-quality search terms for different categories
-          const searchTerms: Record<string, string> = {
-            'Specialized': 'laboratory',
-            'Commercial': 'office',
-            'Industrial': 'factory',
-            'Residential': 'modern-living-room'
+          // Unique stable high-res IDs from Unsplash for different categories
+          const catImages: Record<string, string> = {
+            'Specialized': 'https://images.unsplash.com/photo-1579152276502-545a248a9931',
+            'Commercial': 'https://images.unsplash.com/photo-1497366216548-37526070297c',
+            'Industrial': 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
+            'Residential': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c'
           };
-          const term = searchTerms[service.category] || 'cleaning';
-          const imageUrl = `https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&q=80&w=800&sig=${service.id}`;
+          const imageUrl = `${catImages[service.category] || 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a'}?auto=format&fit=crop&q=80&w=800&sig=${service.id}`;
 
           return (
             <motion.div 
               key={service.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.05 }}
               viewport={{ once: true }}
               className="group bg-white rounded-[3rem] overflow-hidden shadow-xl border border-slate-100 hover:border-sky-500/30 transition-all duration-500 flex flex-col h-full"
             >
@@ -53,9 +52,7 @@ const CategorySection: React.FC<{
                   src={imageUrl} 
                   className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
                   alt={t(service.title)}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800';
-                  }}
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
@@ -108,9 +105,9 @@ const ServicesPage: React.FC = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const commercialServices = SERVICES.filter(s => s.category === 'Commercial');
-  const industrialServices = SERVICES.filter(s => s.category === 'Industrial' && !['sew-1', 'sew-2', 'sew-3', 'sew-4'].includes(s.id));
+  const industrialServices = SERVICES.filter(s => s.category === 'Industrial' && !s.id.startsWith('sew'));
   const specializedServices = SERVICES.filter(s => s.category === 'Specialized');
-  const sewageServices = SERVICES.filter(s => ['sew-1', 'sew-2', 'sew-3', 'sew-4'].includes(s.id));
+  const sewageServices = SERVICES.filter(s => s.id.startsWith('sew'));
 
   const divisions = [
     { name: lang === 'en' ? 'Commercial' : 'Commerciale', id: 'commercial', color: 'bg-sky-500' },
@@ -129,7 +126,6 @@ const ServicesPage: React.FC = () => {
         imageUrl="https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&q=80&w=1920"
       />
 
-      {/* Division Navigation */}
       <div className="sticky top-20 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex overflow-x-auto no-scrollbar py-4 gap-4 md:justify-center">
@@ -185,7 +181,6 @@ const ServicesPage: React.FC = () => {
         />
       </div>
 
-      {/* Service Detail Modal */}
       <AnimatePresence>
         {selectedService && (
           <>
@@ -194,38 +189,27 @@ const ServicesPage: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[60] flex items-center justify-center p-4 md:p-8"
+              className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[150] flex items-center justify-center p-4"
             />
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 40 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 40 }}
-              className="fixed inset-4 md:inset-x-20 md:inset-y-12 bg-white z-[61] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col md:flex-row"
+              className="fixed inset-4 md:inset-x-20 md:inset-y-12 bg-white z-[151] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col md:flex-row"
             >
-              <button 
-                onClick={closeModal}
-                className="absolute top-6 right-6 p-3 bg-slate-100 hover:bg-sky-500 hover:text-white rounded-full transition-all z-[62]"
-              >
+              <button onClick={closeModal} className="absolute top-6 right-6 p-3 bg-slate-100 hover:bg-sky-500 hover:text-white rounded-full transition-all z-[152]">
                 <X className="w-6 h-6" />
               </button>
-
-              {/* Modal Left - Branding & Context */}
               <div className="w-full md:w-1/3 bg-slate-50 relative flex flex-col">
                 <div className="relative h-2/3 overflow-hidden">
-                  <img 
-                    src={`https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&q=80&w=800&sig=${selectedService.id}`}
-                    className="w-full h-full object-cover grayscale-[0.2]"
-                    alt={t(selectedService.title)}
-                  />
+                  <img src={`https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&q=80&w=800&sig=${selectedService.id}`} className="w-full h-full object-cover grayscale-[0.2]" alt={t(selectedService.title)} />
                   <div className="absolute inset-0 bg-gradient-to-t from-sky-950/90 to-transparent flex flex-col justify-end p-12 text-white">
                     <div className="bg-sky-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-xl">
                       {React.createElement((LucideIcons as any)[selectedService.icon] || Zap, { className: "w-8 h-8 text-white" })}
                     </div>
                     <h2 className="text-3xl md:text-4xl font-black tracking-tighter mb-2 leading-none">{t(selectedService.title)}</h2>
-                    <p className="text-sky-300 font-bold uppercase tracking-[0.2em] text-[10px]">{t(selectedService.category)} Division</p>
                   </div>
                 </div>
-                
                 <div className="flex-grow p-12 bg-slate-900 text-white flex flex-col justify-center space-y-4">
                    <div className="flex items-start gap-4">
                      <div className="w-8 h-8 rounded-lg bg-sky-500/20 flex items-center justify-center flex-shrink-0">
@@ -233,44 +217,22 @@ const ServicesPage: React.FC = () => {
                      </div>
                      <div>
                        <h5 className="text-xs font-black uppercase tracking-widest text-sky-400 mb-1">Standard Guarantee</h5>
-                       <p className="text-sm text-slate-300">Certified ISO-compliant sanitation with 100% bonded liability protection.</p>
+                       <p className="text-sm text-slate-300">Certified ISO-compliant sanitation protocols.</p>
                      </div>
                    </div>
                 </div>
               </div>
-
-              {/* Modal Right - The Content */}
               <div className="flex-grow p-8 md:p-20 overflow-y-auto no-scrollbar bg-white">
                 <div className="max-w-3xl space-y-16">
-                  
-                  {/* Section: Deep Overview */}
                   <div className="space-y-6">
-                    <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center">
-                         <Zap className="w-4 h-4 text-sky-600" />
-                       </div>
-                       <h3 className="text-sky-600 font-black tracking-widest uppercase text-xs">Deep Overview</h3>
-                    </div>
+                    <h3 className="text-sky-600 font-black tracking-widest uppercase text-xs">Deep Overview</h3>
                     <p className="text-2xl text-slate-800 leading-relaxed font-semibold tracking-tight">
                       {t(selectedService.detailedDescription)}
                     </p>
-                    {selectedService.whyMatters && (
-                      <div className="p-6 bg-slate-50 border-l-4 border-sky-500 rounded-r-2xl flex gap-4 items-start">
-                        <Info className="w-6 h-6 text-sky-500 mt-1 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-black text-slate-900 text-sm uppercase tracking-widest mb-1">Why it matters</h4>
-                          <p className="text-slate-600 text-lg leading-relaxed">{t(selectedService.whyMatters)}</p>
-                        </div>
-                      </div>
-                    )}
                   </div>
-
-                  {/* Section: Technicals */}
                   <div className="grid md:grid-cols-2 gap-12 pt-8 border-t border-slate-50">
                     <div className="space-y-6">
-                      <h4 className="text-slate-900 font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                        <ListChecks className="w-5 h-5 text-sky-500" /> Deliverables
-                      </h4>
+                      <h4 className="text-slate-900 font-black text-xs uppercase tracking-widest">Deliverables</h4>
                       <ul className="space-y-4">
                         {selectedService.includedTasks[lang].map((task, i) => (
                           <li key={i} className="flex items-start gap-3 text-slate-500 font-bold text-sm">
@@ -280,29 +242,6 @@ const ServicesPage: React.FC = () => {
                         ))}
                       </ul>
                     </div>
-
-                    <div className="space-y-6">
-                      <h4 className="text-slate-900 font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                        <Shield className="w-5 h-5 text-sky-500" /> Compliance
-                      </h4>
-                      <ul className="space-y-4">
-                        {selectedService.specifications[lang].map((spec, i) => (
-                          <li key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-slate-500 font-bold text-sm">
-                            {spec}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="pt-16 border-t border-slate-100 flex flex-col sm:flex-row gap-6 items-center justify-between">
-                    <div>
-                      <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Status: Active Service</p>
-                      <p className="text-slate-900 font-black text-lg tracking-tight">Available in Abidjan & Dakar hubs.</p>
-                    </div>
-                    <Link to="/contact" className="bg-sky-500 text-white px-12 py-6 rounded-3xl font-black text-sm hover:bg-slate-900 transition-all shadow-2xl shadow-sky-500/20 active:scale-95 text-center">
-                      REQUEST FULL QUOTE
-                    </Link>
                   </div>
                 </div>
               </div>
@@ -310,25 +249,6 @@ const ServicesPage: React.FC = () => {
           </>
         )}
       </AnimatePresence>
-
-      {/* Dynamic CTA */}
-      <section className="bg-slate-900 py-32 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-8">
-            Don't see exactly what you <span className="text-sky-500">need?</span>
-          </h2>
-          <p className="text-xl text-slate-400 mb-12">
-            We create bespoke hygiene blueprints for enterprises with unique architectural or operational requirements.
-          </p>
-          <Link to="/contact" className="inline-block bg-sky-500 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-sky-400 transition-all shadow-2xl shadow-sky-500/20">
-            REQUEST CUSTOM BLUEPRINT
-          </Link>
-        </div>
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <div className="bubble w-96 h-96 -top-20 -left-20 bg-sky-500/10"></div>
-          <div className="bubble w-64 h-64 bottom-0 right-0 bg-sky-500/20"></div>
-        </div>
-      </section>
     </div>
   );
 };

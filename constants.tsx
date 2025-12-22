@@ -33,7 +33,7 @@ export const SERVICES: Service[] = [
     detailedDescription: { en: 'Surgical-grade care for elite vehicles using pH-neutral chemicals and non-abrasive techniques.', fr: 'Soins de qualité chirurgicale pour véhicules d\'élite.', ru: 'Профессиональный уход за элитными авто с использованием pH-нейтральных средств.' },
     icon: 'Car',
     category: 'Specialized',
-    includedTasks: { en: ['Ceramic Coating', 'Steam Sanitization'], fr: ['Revêtement céramique', 'Bio-stérilisation'], ru: ['Керавическое покрытие', 'Паровая дезинфекция'] },
+    includedTasks: { en: ['Ceramic Coating', 'Steam Sanitization'], fr: ['Revêtement céramique', 'Bio-stérilisation'], ru: ['Керамическое покрытие', 'Паровая дезинфекция'] },
     specifications: { en: ['Scratch-free guarantee'], fr: ['Garantie sans rayures'], ru: ['Гарантия отсутствия царапин'] }
   },
   {
@@ -53,7 +53,7 @@ export const SERVICES: Service[] = [
     detailedDescription: { en: 'Zero-tolerance pathogen control for surgical environments and diagnostic labs.', fr: 'Contrôle des agents pathogènes tolérance zéro.', ru: 'Нулевая терпимость к патогенам в операционных и лабораториях.' },
     icon: 'Activity',
     category: 'Specialized',
-    includedTasks: { en: ['UV-C Sterilization', 'Terminal Cleaning'], fr: ['Stérilisation UV-C', 'Nettoyage terminal'], ru: ['УФ-стерилизаци', 'Терминальная уборка'] },
+    includedTasks: { en: ['UV-C Sterilization', 'Terminal Cleaning'], fr: ['Stérilisation UV-C', 'Nettoyage terminal'], ru: ['УФ-стерилизация', 'Терминальная уборка'] },
     specifications: { en: ['ATP testing certified'], fr: ['Certifié tests ATP'], ru: ['Сертифицированные ATP-тесты'] }
   },
   {
@@ -236,7 +236,7 @@ export const VALUES: Value[] = [
     icon: 'Fingerprint'
   },
   {
-    title: { en: 'Biological Integrity', fr: 'Intégrité Biologique', ru: 'Биологическая Целостность' },
+    title: { en: 'Biological Integrity', fr: 'Intégrité Биологическая', ru: 'Биологическая Целостность' },
     description: { en: 'Restoring surfaces to their original biological state without wear.', fr: 'Restaurer les surfaces à leur état biologique d\'origine sans usure.', ru: 'Восстановление поверхностей до их первоначального состояния.' },
     icon: 'Zap'
   }
