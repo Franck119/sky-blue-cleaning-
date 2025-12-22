@@ -65,7 +65,8 @@ const App: React.FC = () => {
     <LanguageProvider>
       <Router>
         <ScrollToTop />
-        <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden flex flex-col">
+        <div className="min-h-screen luxury-gradient text-slate-100 overflow-x-hidden flex flex-col relative">
+          {/* Background Elements */}
           <div className="fixed inset-0 pointer-events-none z-0">
             <div className="bubble w-64 h-64 top-[10%] left-[-5%]"></div>
             <div className="bubble w-96 h-96 top-[60%] right-[-10%] opacity-20"></div>
@@ -73,7 +74,7 @@ const App: React.FC = () => {
 
           <Navbar scrolled={scrolled} />
           
-          <main className="flex-grow relative z-10 flex flex-col">
+          <main className="flex-grow relative z-10 flex flex-col mt-[100px]">
             <AnimatedRoutes />
           </main>
 
