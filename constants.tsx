@@ -1,480 +1,293 @@
-
-import { Service, PortfolioItem, Value, BlogPost } from './types';
+import { Service, PortfolioItem, Value, BlogPost } from './types.ts';
 
 export interface Benefit {
   id: string;
-  title: { en: string; fr: string };
-  description: { en: string; fr: string };
+  title: { en: string; fr: string; ru: string };
+  description: { en: string; fr: string; ru: string };
   icon: string;
 }
 
 export const BENEFITS: Benefit[] = [
   {
     id: 'ben-1',
-    title: { en: 'Peace of Mind (Insured & Bonded)', fr: 'Tranquillité d\'Esprit (Assuré et Garanti)' },
+    title: { 
+      en: 'Peace of Mind (Insured & Bonded)', 
+      fr: 'Tranquillité d\'Esprit (Assuré et Garanti)',
+      ru: 'Полное Спокойствие (Страхование и Гарантии)'
+    },
     description: {
-      en: 'We are fully bonded, licensed, and insured for your protection. This ensures that you, your property, and our staff are covered against any unforeseen incidents during our service.',
-      fr: 'Nous sommes entièrement garantis, licenciés et assurés pour votre protection. Cela garantit que vous, votre propriété et notre personnel êtes couverts.'
+      en: 'We are fully bonded, licensed, and insured for your protection. This ensures that you, your property, and our staff are covered.',
+      fr: 'Nous sommes entièrement garantis, licenciés et assurés pour votre protection. Cela garantit que vous, votre propriété et notre personnel êtes couverts.',
+      ru: 'Мы полностью лицензированы и застрахованы. Это гарантирует защиту вас, вашего имущества и нашего персонала.'
     },
     icon: 'ShieldCheck'
-  },
-  {
-    id: 'ben-2',
-    title: { en: 'No Long-Term Contracts', fr: 'Pas de Contrats à Long Terme' },
-    description: {
-      en: 'We believe in earning your business with every visit. Enjoy the flexibility of our services without being locked into lengthy legal agreements.',
-      fr: 'Nous croyons qu\'il faut gagner votre confiance à chaque visite. Profitez de la flexibilité de nos services sans être lié par des accords juridiques.'
-    },
-    icon: 'FileText'
-  },
-  {
-    id: 'ben-3',
-    title: { en: 'Customized Cleaning Plans', fr: 'Plans de Nettoyage Personnalisés' },
-    description: {
-      en: 'Every space is unique. We create a personalized cleaning checklist that fits your specific needs, preferences, and budget.',
-      fr: 'Chaque espace est unique. Nous créons une liste de contrôle personnalisée qui correspond à vos besoins spécifiques.'
-    },
-    icon: 'ClipboardCheck'
-  },
-  {
-    id: 'ben-4',
-    title: { en: 'Consistency & Reliability', fr: 'Consistance et Fiabilité' },
-    description: {
-      en: 'We strive to send the same team to your location for every visit. This builds trust and ensures your specific preferences are followed.',
-      fr: 'Nous nous efforçons d\'envoyer la même équipe chez vous à chaque visite. Cela renforce la confiance.'
-    },
-    icon: 'UserCheck'
   }
 ];
 
 export const SERVICES: Service[] = [
+  // SPECIALIZED (5)
   {
-    id: 'jan-1',
-    title: { en: 'Commercial Janitorial Services', fr: 'Services de Conciergerie Commerciale' },
-    description: { en: 'Comprehensive facility maintenance for corporate towers and shopping malls.', fr: 'Entretien complet des installations pour tours d\'affaires et centres commerciaux.' },
-    detailedDescription: {
-      en: 'SkyBlue Cleaning provides a complete, custom-tailored janitorial program for your commercial property. We understand that a clean building is essential to your professional image.\n\nOur program includes daily maintenance of lobbies, workstations, and high-traffic areas. We implement a rigorous supervision model where every floor is audited nightly before handover.',
-      fr: 'SkyBlue Cleaning propose un programme de conciergerie complet. Nous comprenons qu\'un bâtiment propre est essentiel à votre image.\n\nNotre programme comprend l\'entretien quotidien des halls, des postes de travail et des zones à fort trafic.'
-    },
-    icon: 'Building2',
-    category: 'Commercial',
-    includedTasks: {
-      en: ['Daily Workspace Sanitization', 'Lobby & Reception Detailing', 'Trash & Recycling Management', 'Restroom Supply Restocking', 'Entrance Glass Polishing'],
-      fr: ['Désinfection quotidienne', 'Détails du hall et réception', 'Gestion des déchets', 'Réapprovisionnement sanitaires', 'Polissage des vitres d\'entrée']
-    },
-    specifications: {
-      en: ['Supervisor Audited Daily', 'Color-Coded Hygiene System', 'Hospital-Grade Chemicals', 'Uniformed Professionals'],
-      fr: ['Audit quotidien superviseur', 'Système hygiène couleur', 'Produits grade hospitalier', 'Professionnels en uniforme']
-    }
-  },
-  {
-    id: 'off-1',
-    title: { en: 'Expert Office Cleaning', fr: 'Nettoyage de Bureau Expert' },
-    description: { en: 'Tailored sanitation for professional work environments to boost productivity.', fr: 'Assainissement sur mesure pour les environnements de travail.' },
-    detailedDescription: {
-      en: 'A clean office is a productive office. We focus on the high-frequency touchpoints that harbor bacteria—keyboards, telephones, and door handles. Our staff is trained to handle sensitive electronics and data environments with care.',
-      fr: 'Un bureau propre est un bureau productif. Nous nous concentrons sur les points de contact fréquents qui abritent des bactéries.'
-    },
-    icon: 'Briefcase',
-    category: 'Commercial',
-    includedTasks: {
-      en: ['Keyboard & Phone Sanitizing', 'Conference Table Polishing', 'Breakroom Deep Clean', 'Upholstery Vacuuming', 'Monitor Dusting (Anti-static)'],
-      fr: ['Désinfection claviers/tels', 'Polissage tables conférence', 'Nettoyage profond cuisine', 'Aspiration tissus', 'Dépoussiérage moniteurs']
-    },
-    specifications: {
-      en: ['After-Hours Availability', 'Confidentiality Signed Staff', 'HEPA Air Filtration', 'Electronics-Safe Agents'],
-      fr: ['Disponibilité hors-heures', 'Personnel sous confidentialité', 'Filtration d\'air HEPA', 'Produits sûrs électronique']
-    }
-  },
-  {
-    id: 'med-1',
-    title: { en: 'Medical & Clinical Sanitation', fr: 'Assainissement Médical et Clinique' },
-    description: { en: 'Specialized bio-hazard cleaning for clinics and dental offices.', fr: 'Nettoyage spécialisé pour cliniques et cabinets dentaires.' },
-    detailedDescription: {
-      en: 'In healthcare, cleaning is a matter of safety. SkyBlue Cleaning follows strict protocols for medical facility sanitation, ensuring all patient areas and surgical rooms are sterilized according to international health standards.',
-      fr: 'Dans le secteur de la santé, le nettoyage est une question de sécurité. SkyBlue Cleaning suit des protocoles stricts pour les installations médicales.'
-    },
-    icon: 'Shield',
+    id: 'spec-1',
+    title: { en: 'Luxury Car Detailing', fr: 'Lavage Auto de Luxe', ru: 'Люксовый Детейлинг Авто' },
+    description: { en: 'Premium mobile detailing and interior restoration for high-end vehicles.', fr: 'Détails mobiles haut de gamme et restauration intérieure.', ru: 'Премиальный мобильный детейлинг для люксовых автомобилей.' },
+    detailedDescription: { en: 'Surgical-grade care for elite vehicles using pH-neutral chemicals and non-abrasive techniques.', fr: 'Soins de qualité chirurgicale pour véhicules d\'élite.', ru: 'Профессиональный уход за элитными авто с использованием pH-нейтральных средств.' },
+    icon: 'Car',
     category: 'Specialized',
-    includedTasks: {
-      en: ['Operating Room Sterilization', 'Waiting Room Disinfection', 'Safe Bio-Hazard Disposal', 'Clinical Grade Floor Scrubbing', 'Exam Table Sanitization'],
-      fr: ['Stérilisation blocs opératoires', 'Désinfection salles d\'attente', 'Gestion déchets bio-risques', 'Lavage sols grade clinique', 'Désinfection tables d\'examen']
-    },
-    specifications: {
-      en: ['EPA Approved Sterilants', 'Bloodborne Pathogen Trained', 'Cross-Contamination Prevention', 'Audit-Ready Logs'],
-      fr: ['Stérilisants approuvés EPA', 'Personnel formé pathogènes', 'Prévention contamination', 'Registres conformité']
-    }
+    includedTasks: { en: ['Ceramic Coating', 'Steam Sanitization'], fr: ['Revêtement céramique', 'Bio-stérilisation'], ru: ['Керамическое покрытие', 'Паровая дезинфекция'] },
+    specifications: { en: ['Scratch-free guarantee'], fr: ['Garantie sans rayures'], ru: ['Гарантия отсутствия царапин'] }
   },
   {
-    id: 'win-1',
-    title: { en: 'Professional Window Cleaning', fr: 'Nettoyage de Vitres Professionnel' },
-    description: { en: 'Crystal clear results for high-rises and storefronts.', fr: 'Résultats cristallins pour gratte-ciel et boutiques.' },
-    detailedDescription: {
-      en: 'Using pure water technology and high-reach pole systems, we deliver a streak-free finish that lasts longer. We clean frames, sills, and tracks as part of every standard service.',
-      fr: 'Utilisant la technologie de l\'eau pure, nous offrons une finition sans traces. Nous nettoyons les cadres et les rails.'
-    },
-    icon: 'Maximize',
-    category: 'Commercial',
-    includedTasks: {
-      en: ['Double-Sided Glass Washing', 'Track & Sill Detailing', 'Screen Cleaning', 'Hard Water Stain Removal', 'High-Access Operations'],
-      fr: ['Lavage vitres double face', 'Détails rails et rebords', 'Lavage moustiquaires', 'Enlèvement calcaire', 'Opérations en hauteur']
-    },
-    specifications: {
-      en: ['Pure Water Feed System', 'Height Access Certified', 'Streak-Free Guarantee', 'Wind-Safety Protocols'],
-      fr: ['Système à eau pure', 'Certifié accès hauteur', 'Garantie sans traces', 'Protocoles sécurité vent']
-    }
-  },
-  {
-    id: 'carp-1',
-    title: { en: 'Industrial Carpet Cleaning', fr: 'Nettoyage de Tapis Industriel' },
-    description: { en: 'Deep extraction for high-traffic corporate floorings.', fr: 'Extraction profonde pour les sols de bureaux.' },
-    detailedDescription: {
-      en: 'Our industrial hot-water extraction process removes deep-seated dirt, allergens, and bacteria. We use low-moisture technology to ensure your office carpets are dry and usable within hours.',
-      fr: 'Notre processus d\'extraction à l\'eau chaude élimine la saleté incrustée. Nous utilisons une technologie à faible humidité.'
-    },
-    icon: 'Layers',
-    category: 'Commercial',
-    includedTasks: {
-      en: ['Deep Steam Extraction', 'Stain Pre-Treatment', 'Fiber Deodorizing', 'Industrial Pre-Vacuum', 'pH Balancing Rinse'],
-      fr: ['Extraction vapeur profonde', 'Pré-traitement taches', 'Désodorisation fibres', 'Aspiration industrielle', 'Rinçage équilibre pH']
-    },
-    specifications: {
-      en: ['Fast Drying Time (2-4 hrs)', 'Wool-Safe Certified', 'Deep Allergen Removal', 'Non-Toxic Solutions'],
-      fr: ['Séchage rapide (2-4h)', 'Certifié Wool-Safe', 'Élimination allergènes', 'Solutions non toxiques']
-    }
-  },
-  {
-    id: 'wax-1',
-    title: { en: 'Floor Stripping & Waxing', fr: 'Décapage et Cirage de Sols' },
-    description: { en: 'Restorative treatment for VCT and hard surface flooring.', fr: 'Traitement de restauration pour surfaces dures.' },
-    detailedDescription: {
-      en: 'Revitalize your hard floors. We strip away old, yellowed wax layers and apply multiple coats of high-solids industrial finish for a mirror-like, slip-resistant shine.',
-      fr: 'Revitalisez vos sols. Nous décapons les anciennes couches de cire et appliquons un fini industriel haute brillance.'
-    },
-    icon: 'Zap',
-    category: 'Industrial',
-    includedTasks: {
-      en: ['Complete Wax Removal', 'Edge & Corner Detailing', 'Neutralizing Rinse', '4-5 Coats of Premium Wax', 'High-Speed Burnishing'],
-      fr: ['Retrait complet cire', 'Détails coins et bords', 'Rinçage neutralisant', '4-5 couches cire premium', 'Lustrage haute vitesse']
-    },
-    specifications: {
-      en: ['Mirror-Finish Standards', 'Slip-Resistant Surface', 'Industrial Buffers Used', 'Long-Life Polymer'],
-      fr: ['Standards fini miroir', 'Surface antidérapante', 'Polisseuses industrielles', 'Polymère longue durée']
-    }
-  },
-  {
-    id: 'post-1',
-    title: { en: 'Post-Construction Detailing', fr: 'Nettoyage Après Construction' },
-    description: { en: 'Fine dust and debris removal for newly renovated sites.', fr: 'Enlèvement de poussière fine pour sites rénovés.' },
-    detailedDescription: {
-      en: 'Construction dust settles everywhere. Our specialized team performs a 3-stage clean (Rough, Final, and Polish) to ensure your new building is ready for immediate occupancy.',
-      fr: 'La poussière de construction s\'infiltre partout. Notre équipe effectue un nettoyage en 3 étapes (Brut, Final, Polissage).'
-    },
-    icon: 'HardHat',
+    id: 'spec-2',
+    title: { en: 'Private Jet Detailing', fr: 'Entretien de Jet Privé', ru: 'Детейлинг Частных Самолетов' },
+    description: { en: 'Aviation-grade cabin sanitation and exterior polishing.', fr: 'Assainissement de cabine de qualité aéronautique.', ru: 'Авиационная санитария кабин и полировка фюзеляжа.' },
+    detailedDescription: { en: 'Precision detailing for private aircraft, ensuring immaculate cabin environments and drag-reducing exterior finishes.', fr: 'Détails de précision pour les avions privés.', ru: 'Прецизионный детейлинг для частной авиации, обеспечивающий безупречную чистоту кабины.' },
+    icon: 'Plane',
     category: 'Specialized',
-    includedTasks: {
-      en: ['Fine Silica Dust Removal', 'Inside Cabinet Cleaning', 'Adhesive & Sticker Removal', 'Fixture Polishing', 'HVAC Vent Cleaning'],
-      fr: ['Retrait poussière silice', 'Nettoyage intérieur armoires', 'Retrait adhésifs', 'Polissage robinetterie', 'Nettoyage conduits air']
-    },
-    specifications: {
-      en: ['HEPA Filter Vacuums', 'PPE Equipped Crew', 'Strict Deadlines Met', 'Handover Quality Audit'],
-      fr: ['Aspirateurs filtres HEPA', 'Équipe équipée EPI', 'Respect des délais', 'Audit qualité remise']
-    }
+    includedTasks: { en: ['Cabin Sterilization', 'Brightwork Polishing'], fr: ['Stérilisation cabine', 'Polissage métaux'], ru: ['Стерилизация кабины', 'Полировка металла'] },
+    specifications: { en: ['FAA/EASA standards'], fr: ['Normes FAA/EASA'], ru: ['Стандарты FAA/EASA'] }
   },
   {
-    id: 'dis-1',
-    title: { en: 'Electrostatic Disinfection', fr: 'Désinfection Électrostatique' },
-    description: { en: '360-degree pathogen protection using fogging technology.', fr: 'Protection pathogène à 360° par brumisation.' },
-    detailedDescription: {
-      en: 'Our electrostatic sprayers charge disinfectant particles, causing them to wrap around surfaces for total 360-degree coverage. Ideal for gyms, offices, and schools.',
-      fr: 'Nos pulvérisateurs chargent les particules de désinfectant pour une couverture totale à 360 degrés.'
-    },
+    id: 'spec-3',
+    title: { en: 'Clinic Bio-Sanitation', fr: 'Bio-Assainissement Clinique', ru: 'Био-санитария Клиник' },
+    description: { en: 'Hospital-grade disinfection for medical facilities.', fr: 'Désinfection de qualité hospitalière.', ru: 'Больничная дезинфекция для медицинских учреждений.' },
+    detailedDescription: { en: 'Zero-tolerance pathogen control for surgical environments and diagnostic labs.', fr: 'Contrôle des agents pathogènes толérance zéro.', ru: 'Нулевая терпимость к патогенам в операционных и лабораториях.' },
+    icon: 'Activity',
+    category: 'Specialized',
+    includedTasks: { en: ['UV-C Sterilization', 'Terminal Cleaning'], fr: ['Stérilisation UV-C', 'Nettoyage terminal'], ru: ['УФ-стерилизация', 'Терминальная уборка'] },
+    specifications: { en: ['ATP testing certified'], fr: ['Certifié tests ATP'], ru: ['Сертифицированные ATP-тесты'] }
+  },
+  {
+    id: 'spec-4',
+    title: { en: 'Data Center Sterilization', fr: 'Stérilisation de Data Center', ru: 'Стерилизация Дата-центров' },
+    description: { en: 'Technical cleaning for server environments and cleanrooms.', fr: 'Nettoyage technique pour environnements serveurs.', ru: 'Техническая чистка серверных и чистых помещений.' },
+    detailedDescription: { en: 'Removing micro-particulates that threaten high-availability hardware through specialized sub-floor vacuuming.', fr: 'Élimination des micro-particules pour le matériel.', ru: 'Удаление микрочастиц, угрожающих оборудованию, через вакуумацию подпола.' },
+    icon: 'Server',
+    category: 'Specialized',
+    includedTasks: { en: ['Anti-static Cleaning', 'Sub-floor Vacuuming'], fr: ['Nettoyage antistatique', 'Aspiration faux plancher'], ru: ['Антистатическая чистка', 'Вакуумация подполья'] },
+    specifications: { en: ['ISO 14644-1 compliant'], fr: ['Conforme ISO 14644-1'], ru: ['Соответствие ISO 14644-1'] }
+  },
+  {
+    id: 'spec-5',
+    title: { en: 'Event Venue Transformation', fr: 'Transformation de Lieux d\'Événement', ru: 'Подготовка Площадок' },
+    description: { en: 'Rapid-response pre and post-event restoration.', fr: 'Restauration rapide avant et après événement.', ru: 'Быстрое восстановление площадок до и после мероприятий.' },
+    detailedDescription: { en: 'Ensuring elite venues are returned to pristine condition within hours of large-scale corporate or private galas.', fr: 'Remise en état impeccable des lieux d\'élite.', ru: 'Возвращение элитных площадок в идеальное состояние после гала-концертов.' },
     icon: 'Sparkles',
     category: 'Specialized',
-    includedTasks: {
-      en: ['Full Room Sterilization', 'Electronics-Safe Fogging', 'High-Touch Area Treatment', 'Odor Neutralization', 'Surface Validation'],
-      fr: ['Stérilisation totale', 'Brumisation électronique', 'Traitement zones contact', 'Neutralisation odeurs', 'Validation surfaces']
-    },
-    specifications: {
-      en: ['EPA List N Solutions', 'Kills 99.9% of Viruses', 'Safe for All Surfaces', 'No-Wipe Technology'],
-      fr: ['Solutions liste N EPA', 'Tue 99,9% des virus', 'Sûr pour toutes surfaces', 'Technologie sans essuyage']
-    }
+    includedTasks: { en: ['Odor Neutralization', 'Surface Buffing'], fr: ['Neutralisation d\'odeurs', 'Lustrage'], ru: ['Нейтрализация запахов', 'Полировка поверхностей'] },
+    specifications: { en: ['24h Turnaround'], fr: ['Délai de 24h'], ru: ['Готовность за 24 часа'] }
   },
+
+  // COMMERCIAL (5)
+  {
+    id: 'com-1',
+    title: { en: 'Expert Office Cleaning', fr: 'Nettoyage de Bureau Expert', ru: 'Экспертная Уборка Офисов' },
+    description: { en: 'Tailored sanitation for professional work environments.', fr: 'Assainissement sur mesure pour bureaux.', ru: 'Индивидуальная санитария для офисов.' },
+    detailedDescription: { en: 'Ergonomic health focused cleaning that reduces employee sick leave and boosts productivity.', fr: 'Nettoyage axé sur la santé ergonomique.', ru: 'Уборка, ориентированная на здоровье сотрудников и продуктивность.' },
+    icon: 'Briefcase',
+    category: 'Commercial',
+    includedTasks: { en: ['HEPA Vacuuming', 'Desk Sterilization'], fr: ['Aspiration HEPA', 'Stérilisation bureaux'], ru: ['HEPA-фильтрация', 'Стерилизация столов'] },
+    specifications: { en: ['Non-toxic agents'], fr: ['Agents non toxiques'], ru: ['Нетоксичные средства'] }
+  },
+  {
+    id: 'com-2',
+    title: { en: 'Post-Construction Recovery', fr: 'Remise en état Après Chantier', ru: 'Послестроительная Уборка' },
+    description: { en: 'Final detailing for luxury architectural projects.', fr: 'Détails finaux pour projets architecturaux.', ru: 'Финишная отделка люксовых архитектурных проектов.' },
+    detailedDescription: { en: 'Removing construction debris, dust, and residue from all surfaces to reveal the intended architectural finish.', fr: 'Élimination des débris et de la poussière.', ru: 'Удаление строительного мусора и пыли для открытия финишной отделки.' },
+    icon: 'HardHat',
+    category: 'Commercial',
+    includedTasks: { en: ['Adhesive Removal', 'Fine Dust Extraction'], fr: ['Retrait d\'adhésifs', 'Extraction poussière'], ru: ['Удаление клея', 'Удаление мелкодисперсной пыли'] },
+    specifications: { en: ['Inspection Ready'], fr: ['Prêt pour inspection'], ru: ['Готовность к инспекции'] }
+  },
+  {
+    id: 'com-3',
+    title: { en: 'Facade & High-Rise Glazing', fr: 'Façade et Vitrage de Grande Hauteur', ru: 'Мойка Фасадов и Витражей' },
+    description: { en: 'Pure water window cleaning for corporate towers.', fr: 'Nettoyage de vitres à l\'eau pure pour tours.', ru: 'Мойка окон чистой водой для бизнес-центров.' },
+    detailedDescription: { en: 'High-access cleaning using specialized rope access and telescopic water-fed poles.', fr: 'Nettoyage en hauteur par accès sur corde.', ru: 'Высотная мойка с использованием промышленного альпинизма.' },
+    icon: 'Building',
+    category: 'Commercial',
+    includedTasks: { en: ['Rope Access Cleaning', 'Mineral Deposit Removal'], fr: ['Nettoyage par cordes', 'Retrait dépôts'], ru: ['Промышленный альпинизм', 'Удаление отложений'] },
+    specifications: { en: ['Safety Harness Certified'], fr: ['Certifié harnais sécurité'], ru: ['Сертифицированная страховка'] }
+  },
+  {
+    id: 'com-4',
+    title: { en: 'Luxury Boutique Polish', fr: 'Polissage de Boutique de Luxe', ru: 'Блеск Люксовых Бутиков' },
+    description: { en: 'High-gloss maintenance for retail landmarks.', fr: 'Entretien brillant pour enseignes de luxe.', ru: 'Высокоглянцевый уход для флагманских бутиков.' },
+    detailedDescription: { en: 'Preserving the mirror finish of marble floors and metallic accents in elite retail environments.', fr: 'Préservation du fini miroir du marbre.', ru: 'Сохранение зеркального блеска мраморных полов и металла в бутиках.' },
+    icon: 'ShoppingBag',
+    category: 'Commercial',
+    includedTasks: { en: ['Glass Display Buffing', 'Brass Polishing'], fr: ['Lustrage vitrines', 'Polissage laiton'], ru: ['Полировка витрин', 'Полировка латуни'] },
+    specifications: { en: ['After-hours service'], fr: ['Service après-vente'], ru: ['Обслуживание в нерабочие часы'] }
+  },
+  {
+    id: 'com-5',
+    title: { en: 'Kitchen & Grease Extraction', fr: 'Cuisine et Extraction de Graisse', ru: 'Кухонная Вытяжка и Жир' },
+    description: { en: 'Deep sanitation for commercial culinary hubs.', fr: 'Assainissement profond pour centres culinaires.', ru: 'Глубокая санитария для ресторанных кухонь.' },
+    detailedDescription: { en: 'Fire-safe degreasing of ductwork and surgical cleaning of food preparation surfaces.', fr: 'Dégraissage des conduits coupe-feu.', ru: 'Пожаробезопасное обезжиривание воздуховодов и чистка поверхностей.' },
+    icon: 'ChefHat',
+    category: 'Commercial',
+    includedTasks: { en: ['Duct Degreasing', 'Tile Deep Scrub'], fr: ['Dégraissage conduits', 'Lavage carrelage'], ru: ['Обезжиривание вытяжки', 'Чистка плитки'] },
+    specifications: { en: ['NFPA 96 Standards'], fr: ['Normes NFPA 96'], ru: ['Стандарты NFPA 96'] }
+  },
+
+  // INDUSTRIAL (4 including Sewage logic)
   {
     id: 'ind-1',
-    title: { en: 'Industrial Warehouse Cleaning', fr: 'Nettoyage d\'Entrepôt Industriel' },
-    description: { en: 'Heavy-duty maintenance for logistics and manufacturing hubs.', fr: 'Entretien intensif pour centres logistiques.' },
-    detailedDescription: {
-      en: 'Industrial sites present unique safety challenges. We provide heavy floor scrubbing, high-level dusting of racking systems, and specialized oil degreasing services.',
-      fr: 'Les sites industriels présentent des défis uniques. Nous proposons le lavage mécanique des sols et le dégraissage.'
-    },
+    title: { en: 'Industrial Decontamination', fr: 'Décontamination Industrielle', ru: 'Промышленная Дезактивация' },
+    description: { en: 'Heavy-duty cleaning for factories and logistic hubs.', fr: 'Nettoyage intensif pour usines.', ru: 'Тяжелая уборка для заводов и складов.' },
+    detailedDescription: { en: 'Engineered for safety and compliance. We handle heavy machinery degreasing and hazardous site restoration.', fr: 'Conçu pour la sécurité et la conformité.', ru: 'Обезжиривание тяжелого оборудования и восстановление участков.' },
     icon: 'Factory',
     category: 'Industrial',
-    includedTasks: {
-      en: ['Ride-On Floor Scrubbing', 'Oil Spill Remediation', 'High-Rack Dusting', 'Loading Dock Cleanup', 'Industrial Waste Disposal'],
-      fr: ['Lavage mécanique sols', 'Dégraissage déversements', 'Dépoussiérage racks', 'Nettoyage quais', 'Gestion déchets industriels']
-    },
-    specifications: {
-      en: ['Heavy Equipment Certified', 'Industrial Degreasers', 'After-Hours Scheduling', 'Strict PPE Protocols'],
-      fr: ['Certifié engins lourds', 'Dégraissants industriels', 'Horaires flexibles', 'Protocoles EPI stricts']
-    }
+    includedTasks: { en: ['Machine Degreasing', 'Floor Scrubbing'], fr: ['Dégraissage machine', 'Lavage sols'], ru: ['Обезжиривание машин', 'Скраббинг полов'] },
+    specifications: { en: ['OSHA Compliant'], fr: ['Conforme OSHA'], ru: ['Соответствие OSHA'] }
   },
   {
-    id: 'res-1',
-    title: { en: 'Premium Residential Deep Clean', fr: 'Nettoyage Résidentiel Profond' },
-    description: { en: 'Elite home detailing for luxury estates and residences.', fr: 'Détails de luxe pour propriétés et résidences.' },
-    detailedDescription: {
-      en: 'More than a standard house clean, our Deep Clean service focuses on every corner of your home. From crown moldings to baseboards, we restore your sanctuary to its original brilliance.',
-      fr: 'Plus qu\'un simple ménage, notre nettoyage profond se concentre sur chaque recoin de votre maison.'
-    },
-    icon: 'Home',
-    category: 'Residential',
-    includedTasks: {
-      en: ['Inside Oven & Fridge Clean', 'Baseboard & Molding Detailing', 'Internal Window Washing', 'Deep Bathroom Sanitizing', 'Upholstery Vacuuming'],
-      fr: ['Nettoyage four et frigo', 'Détails plinthes et moulures', 'Lavage vitres intérieur', 'Désinfection sanitaires', 'Aspiration canapés']
-    },
-    specifications: {
-      en: ['Eco-Safe for Kids/Pets', 'Background Checked Staff', 'Same-Team Guarantee', 'Equipment Included'],
-      fr: ['Sûr enfants/animaux', 'Personnel vérifié', 'Garantie même équipe', 'Équipement fourni']
-    }
-  },
-  {
-    id: 'mov-1',
-    title: { en: 'Move-In / Move-Out Cleaning', fr: 'Nettoyage Déménagement / Emménagement' },
-    description: { en: 'Total vacancy preparation for tenants and landlords.', fr: 'Préparation complète pour locataires et propriétaires.' },
-    detailedDescription: {
-      en: 'Moving is stressful enough. SkyBlue Cleaning handles the heavy lifting by sterilizing the entire property, ensuring it meets strict lease handover standards for maximum deposit return.',
-      fr: 'Déménager est stressant. SkyBlue Cleaning s\'occuppe de tout en stérilisant la propriété pour une remise des clés sans soucis.'
-    },
-    icon: 'Key',
-    category: 'Residential',
-    includedTasks: {
-      en: ['Wall Spot Cleaning', 'Inside All Cabinetry', 'Deep Appliance Scrubbing', 'Closet Detailing', 'Floor Restoration'],
-      fr: ['Nettoyage taches murs', 'Intérieur de tous placards', 'Récurage appareils', 'Détails garde-robes', 'Restauration des sols']
-    },
-    specifications: {
-      en: ['Same-Day Readiness', 'Deposit-Back Guarantee', 'Photo Verification Report', 'Heavy Duty Supplies'],
-      fr: ['Prêt le jour même', 'Garantie caution', 'Rapport photo validation', 'Produits haute puissance']
-    }
-  },
-  {
-    id: 'pre-1',
-    title: { en: 'High-Pressure Exterior Washing', fr: 'Lavage Haute Pression Extérieur' },
-    description: { en: 'Revitalizing driveways, decks, and building exteriors.', fr: 'Revitalisation des allées, terrasses et façades.' },
-    detailedDescription: {
-      en: 'Remove years of grime, mold, and stains from your exterior surfaces. Our industrial pressure washing systems restore stone, concrete, and brick to their like-new appearance.',
-      fr: 'Éliminez des années de crasse, moisissures et taches. Nos systèmes restaurent pierre, béton et brique.'
-    },
-    icon: 'Waves',
-    category: 'Industrial',
-    includedTasks: {
-      en: ['Driveway Oil Removal', 'Building Facade Wash', 'Deck & Patio Detailing', 'Fence Restoration', 'Gutter Exterior Polish'],
-      fr: ['Dégraissage allées', 'Lavage façade bâtiment', 'Détails terrasse et patio', 'Restauration clôture', 'Polissage extérieur gouttières']
-    },
-    specifications: {
-      en: ['3500 PSI Power Units', 'Eco-Friendly Degreasers', 'Surface-Safe Nozzles', 'Water Recovery Options'],
-      fr: ['Unités 3500 PSI', 'Dégraissants éco', 'Buses sécurisées surfaces', 'Récupération d\'eau']
-    }
-  },
-  {
-    id: 'uph-1',
-    title: { en: 'Upholstery & Leather Care', fr: 'Entretien Tissus et Cuir' },
-    description: { en: 'Premium maintenance for sofas, chairs, and office seating.', fr: 'Entretien premium pour canapés et sièges de bureau.' },
-    detailedDescription: {
-      en: 'Extend the life of your furniture. We offer specialized steam cleaning for fabrics and gentle conditioning for leather, removing oils, skin cells, and deep-seated dust.',
-      fr: 'Prolongez la vie de vos meubles. Nous proposons un nettoyage à la vapeur pour les tissus et un soin pour le cuir.'
-    },
-    icon: 'Armchair',
-    category: 'Specialized',
-    includedTasks: {
-      en: ['Fabric Steam Cleaning', 'Leather Conditioning', 'Pet Hair Removal', 'Odor Neutralizing', 'Anti-Stain Protection'],
-      fr: ['Nettoyage vapeur tissu', 'Soin nourrissant cuir', 'Retrait poils animaux', 'Neutralisation odeurs', 'Protection anti-taches']
-    },
-    specifications: {
-      en: ['Fast Dry Technology', 'pH Balanced Cleaners', 'Gentle Fiber Care', 'Deep Dirt Extraction'],
-      fr: ['Technologie séchage vite', 'Nettoyants pH neutre', 'Soin fibres délicates', 'Extraction saleté']
-    }
-  },
-  {
-    id: 'kit-1',
-    title: { en: 'Commercial Kitchen Sanitation', fr: 'Assainissement Cuisine Commerciale' },
-    description: { en: 'Deep cleaning for restaurants, hotels, and food plants.', fr: 'Nettoyage profond pour restaurants et hôtels.' },
-    detailedDescription: {
-      en: 'Food safety is non-negotiable. SkyBlue Cleaning provides specialized degreasing of hood systems, deep sterilization of food prep surfaces, and heavy floor maintenance for industrial kitchens.',
-      fr: 'La sécurité alimentaire est non négociable. SkyBlue Cleaning propose le dégraissage des hottes et la stérilisation des plans de travail.'
-    },
-    icon: 'Utensils',
-    category: 'Commercial',
-    includedTasks: {
-      en: ['Hood & Duct Degreasing', 'Stainless Steel Polishing', 'Drain Sanitization', 'High-Temp Steam Cleaning', 'Backsplash Scrubbing'],
-      fr: ['Dégraissage hottes/conduits', 'Polissage inox', 'Désinfection drains', 'Lavage vapeur haute temp', 'Récurage crédences']
-    },
-    specifications: {
-      en: ['Food-Grade Chemicals', 'Health Code Compliant', 'Night Service Priority', 'Certificates Issued'],
-      fr: ['Produits grade alimentaire', 'Conformité code santé', 'Priorité service de nuit', 'Certificats délivrés']
-    }
-  },
-  {
-    id: 'edu-1',
-    title: { en: 'School & Daycare Cleaning', fr: 'Nettoyage École et Crèche' },
-    description: { en: 'Safe, non-toxic environment for educational facilities.', fr: 'Environnement sûr et non toxique pour écoles.' },
-    detailedDescription: {
-      en: 'Protect your students. We use kid-safe, botanical disinfectants to sterilize classrooms and play areas, significantly reducing the spread of seasonal illnesses.',
-      fr: 'Protégez vos élèves. Nous utilisons des désinfectants botaniques pour stériliser les classes et les zones de jeux.'
-    },
-    icon: 'GraduationCap',
-    category: 'Specialized',
-    includedTasks: {
-      en: ['Desk & Chair Sanitizing', 'Play Equipment Sterilization', 'Cafeteria Deep Clean', 'Safe Restroom Hygiene', 'Gymnasium Floor Care'],
-      fr: ['Désinfection tables/chaises', 'Stérilisation jeux', 'Nettoyage cantine', 'Hygiène sanitaires sûre', 'Entretien sols gymnase']
-    },
-    specifications: {
-      en: ['100% Non-Toxic Agents', 'Daily Surface Logs', 'Background Checked Staff', 'Allergy-Safe HEPA Vacs'],
-      fr: ['Agents 100% non toxiques', 'Journaux passage quotidiens', 'Personnel vérifié', 'Aspirateurs HEPA anti-allergie']
-    }
-  },
-  {
-    id: 'air-1',
-    title: { en: 'Short-Term Rental Turnover', fr: 'Rotation Location Courte Durée' },
-    description: { en: 'High-speed cleaning for Airbnb and rental properties.', fr: 'Nettoyage rapide pour Airbnb et locations.' },
-    detailedDescription: {
-      en: 'Maintain your 5-star rating. SkyBlue Cleaning provides rapid turnover services including laundry management and property restaging, ensuring every guest feels like the first one.',
-      fr: 'Maintenez vos 5 étoiles. SkyBlue Cleaning assure une rotation rapide incluant la gestion du linge pour vos locations.'
-    },
-    icon: 'Star',
-    category: 'Residential',
-    includedTasks: {
-      en: ['Bed Linen Change', 'Toiletries Restocking', 'Staged Presentation', 'Kitchen Sanitization', 'Inventory Reporting'],
-      fr: ['Changement des draps', 'Réapprovisionnement savon', 'Mise en scène accueil', 'Désinfection cuisine', 'Rapport inventaire']
-    },
-    specifications: {
-      en: ['Guaranteed Check-in Ready', 'Photo Report per Stay', 'Laundry Management', 'Emergency Call-outs'],
-      fr: ['Prêt pour le check-in', 'Rapport photo par séjour', 'Gestion blanchisserie', 'Interventions d\'urgence']
-    }
-  },
-  {
-    id: 'sol-1',
-    title: { en: 'Solar Panel Maintenance', fr: 'Entretien de Panneaux Solaires' },
-    description: { en: 'Maximizing energy efficiency through professional cleaning.', fr: 'Optimisation de l\'énergie par un nettoyage pro.' },
-    detailedDescription: {
-      en: 'Dust and bird droppings can reduce solar efficiency by up to 25%. We use deionized water and soft-brush technology to restore your panels to peak performance safely.',
-      fr: 'La poussière réduit l\'efficacité solaire jusqu\'à 25%. Nous utilisons l\'eau déionisée pour restaurer les performances.'
-    },
+    id: 'ind-2',
+    title: { en: 'Solar Farm Maintenance', fr: 'Entretien de Parc Solaire', ru: 'Обслуживание Солнечных Ферм' },
+    description: { en: 'Robotic cleaning for maximum energy efficiency.', fr: 'Nettoyage robotisé pour l\'efficacité énergétique.', ru: 'Роботизированная мойка для макс. эффективности.' },
+    detailedDescription: { en: 'Removing Sahelian dust and organic buildup from PV panels to ensure optimal photon absorption.', fr: 'Retrait de la poussière sahélienne.', ru: 'Удаление пыли Сахеля с панелей для оптимального поглощения энергии.' },
     icon: 'Sun',
     category: 'Industrial',
-    includedTasks: {
-      en: ['Deionized Water Rinse', 'Soft-Brush Dust Removal', 'Bird Nest Clearance', 'Inverter Exterior Wipe', 'Efficiency Pre/Post Test'],
-      fr: ['Rinçage eau déionisée', 'Retrait poussière brosse douce', 'Nettoyage nids d\'oiseaux', 'Soin extérieur onduleur', 'Test efficacité pré/post']
-    },
-    specifications: {
-      en: ['No-Chemical Process', 'Safe Roof Access Crew', 'Non-Abrasive Technology', 'Performance Reports'],
-      fr: ['Processus sans chimie', 'Équipe accès toit sûre', 'Technologie non abrasive', 'Rapports de performance']
-    }
+    includedTasks: { en: ['Deionized Water Wash', 'Inspection Report'], fr: ['Lavage eau déionisée', 'Rapport d\'inspection'], ru: ['Мойка деионизированной водой', 'Инспекция'] },
+    specifications: { en: ['Zero Residue Guarantee'], fr: ['Garantie zéro résidu'], ru: ['Гарантия отсутствия налета'] }
+  },
+  {
+    id: 'ind-3',
+    title: { en: 'Logistic Cold-Chain Hygiene', fr: 'Hygiène de la Chaîne du Froid', ru: 'Гигиена Холодовой Цепи' },
+    description: { en: 'Sanitation for cold storage and warehouse facilities.', fr: 'Assainissement pour entrepôts frigorifiques.', ru: 'Санитария для холодильных складов.' },
+    detailedDescription: { en: 'Sub-zero sanitation protocols to prevent microbial growth in temperature-controlled food storage.', fr: 'Protocoles d\'assainissement sous zéro.', ru: 'Санитарные протоколы для работы при отрицательных температурах.' },
+    icon: 'Truck',
+    category: 'Industrial',
+    includedTasks: { en: ['Anti-freeze Cleaning', 'Mold Remediation'], fr: ['Nettoyage antigel', 'Traitement moisissure'], ru: ['Мойка незамерзайкой', 'Удаление плесени'] },
+    specifications: { en: ['HACCP Compliant'], fr: ['Conforme HACCP'], ru: ['Соответствие HACCP'] }
+  },
+  {
+    id: 'sew-1', // Sewage logic filter in ServicesPage uses this prefix
+    title: { en: 'Waste-to-Gas Management', fr: 'Gestion Déchets-en-Gaz', ru: 'Утилизация Отходов в Газ' },
+    description: { en: 'Transforming sewage into renewable domestic energy.', fr: 'Transformer les eaux usées en énergie.', ru: 'Превращение сточных вод в энергию.' },
+    detailedDescription: { en: 'Our signature circular economy service using anaerobic digestion to produce purified biogas.', fr: 'Service d\'économie circulaire signature.', ru: 'Наш флагманский сервис по производству биогаза.' },
+    icon: 'Zap',
+    category: 'Industrial',
+    includedTasks: { en: ['Vacuum Extraction', 'Bio-Processing'], fr: ['Extraction sous vide', 'Bio-traitement'], ru: ['Вакуумная экстракция', 'Биообработка'] },
+    specifications: { en: ['Certified Circularity'], fr: ['Circularité certifiée'], ru: ['Сертифицированная цикличность'] }
+  },
+
+  // RESIDENTIAL (3)
+  {
+    id: 'res-1',
+    title: { en: 'Deep Home Sanctuary', fr: 'Sanctuaire Résidentiel', ru: 'Глубокая Уборка Дома' },
+    description: { en: 'Comprehensive restoration of luxury living spaces.', fr: 'Restauration complète d\'espaces de luxe.', ru: 'Комплексное восстановление элитных домов.' },
+    detailedDescription: { en: 'White-glove deep clean focusing on fine materials like marble, hardwood, and silk wall coverings.', fr: 'Nettoyage en gants blancs pour matériaux fins.', ru: 'Глубокая уборка элитных материалов: мрамора, дерева и шелка.' },
+    icon: 'Home',
+    category: 'Residential',
+    includedTasks: { en: ['Marble Polishing', 'Intricate Dusting'], fr: ['Polissage marbre', 'Époussetage délicat'], ru: ['Полировка мрамора', 'Детальная чистка'] },
+    specifications: { en: ['Pet-friendly chemicals'], fr: ['Produits pour animaux'], ru: ['Безопасно для питомцев'] }
+  },
+  {
+    id: 'res-2',
+    title: { en: 'Upholstery & Fine Fabric Care', fr: 'Soin des Tissus Fins', ru: 'Уход за Тканями и Мебелью' },
+    description: { en: 'Specialized cleaning for designer furniture and carpets.', fr: 'Nettoyage spécialisé pour meubles design.', ru: 'Специальная чистка дизайнерской мебели и ковров.' },
+    detailedDescription: { en: 'Steam and dry extraction methods that protect high-fashion textiles and natural fibers.', fr: 'Méthodes d\'extraction à la vapeur et à sec.', ru: 'Методы паровой и сухой экстракции для защиты натуральных волокон.' },
+    icon: 'Wind',
+    category: 'Residential',
+    includedTasks: { en: ['Silk Rug Cleaning', 'Leather Treatment'], fr: ['Nettoyage tapis soie', 'Soin du cuir'], ru: ['Чистка шелковых ковров', 'Уход за кожей'] },
+    specifications: { en: ['Zero shrinkage guarantee'], fr: ['Garantie zéro rétrécissement'], ru: ['Гарантия отсутствия усадки'] }
+  },
+  {
+    id: 'res-3',
+    title: { en: 'Estate Pool & Water Care', fr: 'Entretien Piscine et Eaux', ru: 'Уход за Бассейнами Усадьб' },
+    description: { en: 'Chemical balance and structural sanitation for private pools.', fr: 'Équilibre chimique et assainissement piscine.', ru: 'Химический баланс и санитария частных бассейнов.' },
+    detailedDescription: { en: 'Advanced water testing and structural scrubbing to maintain crystal clear architectural water features.', fr: 'Tests d\'eau avancés et récurage structurel.', ru: 'Тестирование воды и чистка чаш для кристальной чистоты.' },
+    icon: 'Droplets',
+    category: 'Residential',
+    includedTasks: { en: ['Algae Remediation', 'pH Balancing'], fr: ['Traitement algues', 'Équilibre pH'], ru: ['Удаление водорослей', 'Баланс pH'] },
+    specifications: { en: ['Weekly Health Report'], fr: ['Rapport santé hebdo'], ru: ['Еженедельный отчет'] }
   }
 ];
 
 export const VALUES: Value[] = [
   {
-    title: { en: 'Bonded & Insured', fr: 'Assuré et Garanti' },
-    description: { 
-      en: 'Full liability coverage for all technicians across West Africa.', 
-      fr: 'Assurance responsabilité civile complète pour tous nos techniciens.' 
-    },
-    icon: 'ShieldCheck'
+    title: { en: 'Radical Transparency', fr: 'Transparence Radicale', ru: 'Радикальная Прозрачность' },
+    description: { en: 'Open pricing and live visual proof of work via our app.', fr: 'Tarification ouverte et preuve visuelle via notre application.', ru: 'Открытое ценообразование и визуальное подтверждение работы.' },
+    icon: 'Eye'
   },
   {
-    title: { en: 'Hospital-Grade Quality', fr: 'Qualité Hospitalière' },
-    description: { 
-      en: 'EPA-approved disinfectants that kill 99.9% of pathogens.', 
-      fr: 'Désinfectants approuvés EPA qui tuent 99,9% des pathogènes.' 
-    },
-    icon: 'Sparkles'
+    title: { en: 'Surgical Precision', fr: 'Précision Chirurgicale', ru: 'Хирургическая Точность' },
+    description: { en: 'Every movement is calculated to ensure zero trace of contaminants.', fr: 'Chaque mouvement est calculé pour garantir zéro trace de contaminants.', ru: 'Каждое движение рассчитано для обеспечения нулевого следа загрязнений.' },
+    icon: 'Target'
   },
   {
-    title: { en: 'Sustainability First', fr: 'La Durabilité d\'Abord' },
-    description: { 
-      en: '100% biodegradable, non-toxic agents safe for the planet.', 
-      fr: 'Agents 100% biodégradables et non toxiques.' 
-    },
+    title: { en: 'Eco-Luxe Technology', fr: 'Technologie Éco-Luxe', ru: 'Эко-Люкс Технологии' },
+    description: { en: 'We use premium biodegradable agents that protect both surfaces and the planet.', fr: 'Nous utilisons des agents biodégradables de qualité supérieure.', ru: 'Мы используем биоразлагаемые средства премиум-класса.' },
     icon: 'Leaf'
   },
   {
-    title: { en: 'Reliability & Trust', fr: 'Fiabilité et Confiance' },
-    description: { 
-      en: 'Rigorous background checks and continuous elite training.', 
-      fr: 'Vérifications rigoureuses et formation d\'élite continue.' 
-    },
-    icon: 'Users'
+    title: { en: 'Absolute Reliability', fr: 'Fiabilité Absolue', ru: 'Абсолютная Надежность' },
+    description: { en: '24/7 dedicated response teams for West Africa\'s most prestigious landmarks.', fr: 'Équipes d\'intervention dédiées 24h/24 et 7j/7.', ru: 'Круглосуточные группы реагирования для самых престижных объектов.' },
+    icon: 'ShieldCheck'
   }
 ];
 
 export const TESTIMONIALS = [
-  {
-    id: 1,
-    name: "Mamadou Traoré",
-    role: "Property Manager, Plateau Finance Center",
-    text: {
-      en: "SkyBlue Cleaning has transformed our building's hygiene standards. Their team is punctual, professional, and the floors have never looked better.",
-      fr: "SkyBlue Cleaning a transformé les standards d'hygiène de notre bâtiment. L'équipe est ponctuelle et professionnelle."
-    }
+  { 
+    id: 1, 
+    name: "Mamadou Traoré", 
+    role: "Property Manager", 
+    text: { en: "Unmatched precision. Their attention to architectural detail is surgical.", fr: "Précision inégalée. Leur attention aux détails architecturaux est chirurgicale.", ru: "Несравненная точность. Их внимание к архитектурным деталям просто хирургическое." } 
   },
-  {
-    id: 2,
-    name: "Clarisse Kouamé",
-    role: "Riviera Estate Owner",
-    text: {
-      en: "The move-out cleaning service was exceptional. They saved me so much time and the apartment was spotless for the new tenants.",
-      fr: "Le service de nettoyage de déménagement était exceptionnel. L'appartement était impeccable."
-    }
-  }
-];
-
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    id: 'b1',
-    title: { en: 'Why Office Sanitation Boosts Productivity', fr: 'Pourquoi l\'Assainissement des Bureaux Booste la Productivité' },
-    excerpt: { en: 'A clean workspace reduces employee sick days and increases focus.', fr: 'Un espace de travail propre réduit les jours de maladie et augmente la concentration.' },
-    date: 'Mar 15, 2025',
-    imageUrl: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=800',
-    author: 'Expert Team'
+  { 
+    id: 2, 
+    name: "Sarah Kone", 
+    role: "Luxury Retail Director", 
+    text: { en: "The only service in Abidjan that understands high-fashion requirements.", fr: "Le seul service à Abidjan qui comprend les exigences de la haute couture.", ru: "Единственный сервис в Абиджане, который понимает требования высокой моды." } 
   }
 ];
 
 export const PORTFOLIO: PortfolioItem[] = [
   {
     id: 'p1',
-    title: { en: 'Corporate Tower Refresh', fr: 'Rafraîchissement de Tour d\'Affaires' },
+    title: { en: 'Corporate Tower - Plateau', fr: 'Tour d\'Affaires - Plateau', ru: 'Бизнес-центр - Плато' },
     location: 'Plateau, Abidjan',
-    description: { en: 'Daily janitorial for 20 floors of elite workspace.', fr: 'Entretien quotidien pour 20 étages d\'espace de travail.' },
-    results: { en: 'Gold Grade Hygiene Certification', fr: 'Certification Hygiène Niveau Or' },
+    description: { en: 'Full-scale janitorial management for a 25-story landmark.', fr: 'Gestion complète d\'un repère de 25 étages.', ru: 'Полное управление чистотой 25-этажного здания.' },
+    results: { en: 'Gold Certified Hygiene', fr: 'Certifié Hygiène Or', ru: 'Сертификат гигиены Gold' },
     imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800',
     category: 'Commercial'
   },
   {
     id: 'p2',
-    title: { en: 'Airport Hangar Jet-Cleaning', fr: 'Nettoyage Jet de Hangar Aéroportuaire' },
-    location: 'Abidjan FHB Int Airport',
-    description: { en: 'Specialized industrial jet cleaning for aviation maintenance hangars and runway aprons.', fr: 'Nettoyage jet industriel spécialisé pour les hangars de maintenance et les aires de trafic.' },
-    results: { en: 'International Safety Standard Compliant', fr: 'Conforme aux Normes de Sécurité Internationales' },
-    imageUrl: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?auto=format&fit=crop&q=80&w=800',
-    category: 'Industrial'
+    title: { en: 'Luxury Estate Cocody', fr: 'Domaine de Luxe Cocody', ru: 'Люксовое Поместье Кокоди' },
+    location: 'Cocody, Abidjan',
+    description: { en: 'Detailed restoration of artisanal marble and imported wood finishes.', fr: 'Restauration détaillée du marbre et du bois importé.', ru: 'Восстановление мрамора и импортной отделки из дерева.' },
+    results: { en: 'Pristine Heritage Preservation', fr: 'Préservation du Patrimoine', ru: 'Сохранение первозданного вида' },
+    imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800',
+    category: 'Residential'
   },
   {
     id: 'p3',
-    title: { en: 'Industrial Refinery Jet-Wash', fr: 'Lavage Jet de Raffinerie Industrielle' },
-    location: 'San Pedro Industrial Zone',
-    description: { en: 'High-pressure petrochemical facility cleaning for storage tanks and piping systems.', fr: 'Nettoyage haute pression d\'installations pétrochimiques pour les réservoirs et les tuyauteries.' },
-    results: { en: '0 Incidents Reported', fr: '0 Incidents Signalés' },
-    imageUrl: 'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&q=80&w=800',
-    category: 'Industrial'
+    title: { en: 'International Airport Hub', fr: 'Hub Aéroportuaire International', ru: 'Международный Аэропорт' },
+    location: 'Abidjan Airport (ABJ)',
+    description: { en: 'High-traffic sanitation and specialized terminal restoration.', fr: 'Assainissement à haut trafic et restauration de terminal.', ru: 'Санитария зон высокой проходимости и реставрация терминалов.' },
+    results: { en: 'International Aviation Standard', fr: 'Norme Aviation Internationale', ru: 'Стандарт международной авиации' },
+    imageUrl: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&q=80&w=800',
+    category: 'Specialized'
   },
   {
     id: 'p4',
-    title: { en: 'Abidjan Mall Large Surface Care', fr: 'Entretien Grandes Surfaces Abidjan Mall' },
-    location: 'Riviera, Abidjan',
-    description: { en: 'Daily maintenance of 30,000m² of luxury retail floor space and structural glass.', fr: 'Entretien quotidien de 30 000 m² de surfaces commerciales de luxe et de vitrages structurels.' },
-    results: { en: 'Diamond Standard Rating', fr: 'Évaluation Norme Diamant' },
-    imageUrl: 'https://images.unsplash.com/photo-1567449300518-034b4224ee02?auto=format&fit=crop&q=80&w=800',
-    category: 'Commercial'
+    title: { en: 'Logistics Warehouse Delta', fr: 'Entrepôt Logistique Delta', ru: 'Логистический Склад Дельта' },
+    location: 'Vridi Industrial Zone',
+    description: { en: 'Industrial-grade deep clean for a 10,000m2 cold storage facility.', fr: 'Nettoyage intensif pour entrepôt frigorifique de 10 000 m2.', ru: 'Промышленная уборка холодильного склада площадью 10 000 м2.' },
+    results: { en: 'Full Compliance Audit Pass', fr: 'Audit de Conformité Réussi', ru: 'Успешный аудит соответствия' },
+    imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800',
+    category: 'Industrial'
+  }
+];
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: 'b1',
+    title: { en: 'Hygiene & Productivity', fr: 'Hygiène et Productivité', ru: 'Гигиена и Продуктивность' },
+    excerpt: { en: 'Clean offices win.', fr: 'Les bureaux propres gagnent.', ru: 'Чистые офисы побеждают.' },
+    date: 'Mar 15, 2025',
+    imageUrl: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=800',
+    author: 'Admin'
   }
 ];

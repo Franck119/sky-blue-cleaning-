@@ -1,246 +1,334 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as LucideIcons from 'lucide-react';
-import PageHeader from '../components/PageHeader';
-import { SERVICES } from '../constants';
-import { CheckCircle2, ArrowRight, X, Sparkles, ClipboardList, Target, ShieldCheck } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useScrollReveal } from '../hooks/useScrollReveal';
-import { useTranslation } from '../App';
-import { Service } from '../types';
+import PageHeader from '../components/PageHeader.tsx';
+import { SERVICES } from '../constants.tsx';
+import { ArrowRight, CheckCircle, ExternalLink, X, Shield, ListChecks, Zap, Info, PlayCircle } from 'lucide-react';
+import { useTranslation } from '../LanguageContext.tsx';
+import { Service } from '../types.ts';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const ServiceModal: React.FC<{ service: Service; onClose: () => void }> = ({ service, onClose }) => {
+const CategorySection: React.FC<{ 
+  id: string;
+  title: string; 
+  subtitle: string; 
+  services: Service[];
+  accentColor: string;
+  onOpenSpecs: (service: Service) => void;
+}> = ({ id, title, subtitle, services, accentColor, onOpenSpecs }) => {
   const { lang, t } = useTranslation();
-  const IconComponent = (LucideIcons as any)[service.icon];
-  const navigate = useNavigate();
-
-  const tasks = service.includedTasks[lang] || service.includedTasks['en'];
-  const specs = service.specifications[lang] || service.specifications['en'];
-  
-  const detailedText = t(service.detailedDescription);
-  const paragraphs = detailedText.split('\n\n');
-
-  const serviceImages: Record<string, string> = {
-    'jan-1': 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
-    'off-1': 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200',
-    'med-1': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1200',
-    'win-1': 'https://images.unsplash.com/photo-1527515545081-5db817172677?auto=format&fit=crop&q=80&w=1200',
-    'carp-1': 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&q=80&w=1200',
-    'wax-1': 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200',
-    'post-1': 'https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&q=80&w=1200',
-    'dis-1': 'https://images.unsplash.com/photo-1584433144859-1fc3ab94a957?auto=format&fit=crop&q=80&w=1200',
-    'ind-1': 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=1200',
-    'res-1': 'https://images.unsplash.com/photo-1603673073913-c980325d2543?auto=format&fit=crop&q=80&w=1200',
-    'mov-1': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200',
-    'pre-1': 'https://images.unsplash.com/photo-1520333789090-1afc82db536a?auto=format&fit=crop&q=80&w=1200',
-    'uph-1': 'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&q=80&w=1200',
-    'kit-1': 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=1200',
-    'edu-1': 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=1200',
-    'air-1': 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1200',
-    'sol-1': 'https://images.unsplash.com/photo-1508514177221-18d14 closure-e26093c23a54?auto=format&fit=crop&q=80&w=1200',
-  };
-
-  const modalImg = serviceImages[service.id] || `https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&q=80&w=1200&sig=${service.id}`;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8">
-      <div 
-        className="absolute inset-0 bg-slate-900/95 backdrop-blur-md cursor-pointer"
-        onClick={onClose}
-      ></div>
-      
-      <div className="relative w-full max-w-6xl bg-white rounded-3xl md:rounded-[3rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row h-full lg:h-auto max-h-[95vh] lg:max-h-[85vh] border border-slate-200">
-        
-        <div className="lg:w-5/12 relative min-h-[250px] lg:min-h-[500px] flex-shrink-0">
-          <img src={modalImg} className="w-full h-full object-cover" alt={t(service.title)} />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-          
-          <div className="absolute bottom-6 left-6 right-6 lg:bottom-12 lg:left-12 lg:right-12 text-white space-y-4">
-             <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30">
-                {IconComponent && <IconComponent className="w-8 h-8 text-sky-400" />}
-             </div>
-             <h2 className="text-3xl lg:text-5xl font-bold leading-tight tracking-tight">{t(service.title)}</h2>
-             <div className="flex items-center gap-2 text-sky-400 font-bold uppercase tracking-widest text-xs">
-                <ShieldCheck className="w-4 h-4" />
-                SkyBlue Cleaning Certified Professional
-             </div>
-          </div>
-
-          <button onClick={onClose} className="absolute top-6 left-6 lg:hidden w-10 h-10 bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white z-20">
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-
-        <div className="lg:w-7/12 p-6 md:p-12 lg:p-16 overflow-y-auto custom-scrollbar bg-white relative flex flex-col">
-          <div className="hidden lg:block absolute top-10 right-10 z-20">
-            <button onClick={onClose} className="w-12 h-12 bg-slate-100 hover:bg-sky-500 hover:text-white rounded-xl flex items-center justify-center transition-all group">
-              <X className="w-6 h-6 group-hover:scale-125 transition-transform" />
-            </button>
-          </div>
-
-          <div className="space-y-10">
-            <div className="space-y-6">
-              <span className="text-xs font-black text-sky-600 uppercase tracking-widest bg-sky-50 px-4 py-2 rounded-lg inline-block">
-                {service.category} Service
-              </span>
-              <p className="text-xl lg:text-2xl text-slate-900 leading-relaxed font-bold border-l-4 border-sky-500 pl-6">
-                {t(service.description)}
-              </p>
-              
-              <div className="text-lg text-slate-700 leading-relaxed space-y-6 pt-2">
-                 {paragraphs.map((p, idx) => (
-                   <p key={idx} className="bg-slate-50 p-6 rounded-2xl border border-slate-100 leading-relaxed text-sm md:text-base">
-                     {p}
-                   </p>
-                 ))}
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-6 bg-white p-8 rounded-3xl border border-sky-100 shadow-sm">
-                <h4 className="font-bold text-slate-900 text-lg flex items-center gap-3 pb-3 border-b border-sky-100">
-                  <ClipboardList className="w-5 h-5 text-sky-500" />
-                  {lang === 'en' ? 'Core Tasks' : 'Tâches Clés'}
-                </h4>
-                <ul className="space-y-3">
-                  {tasks.map((item, i) => (
-                    <li key={i} className="flex items-start gap-4 text-slate-700 text-xs md:text-sm font-semibold">
-                      <div className="w-2 h-2 rounded-full bg-sky-500 mt-1.5 flex-shrink-0"></div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-6 bg-white p-8 rounded-3xl border border-sky-100 shadow-sm">
-                <h4 className="font-bold text-slate-900 text-lg flex items-center gap-3 pb-3 border-b border-sky-100">
-                  <Target className="w-5 h-5 text-sky-500" />
-                  {lang === 'en' ? 'Service Specs' : 'Spécifications'}
-                </h4>
-                <ul className="space-y-3">
-                  {specs.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-800 font-bold text-[10px] md:text-xs uppercase tracking-wider">
-                      <CheckCircle2 className="w-4 h-4 text-sky-500 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-slate-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
-               <div className="text-white relative z-10 text-center md:text-left">
-                  <h5 className="text-xl md:text-2xl font-bold mb-2">
-                     {lang === 'en' ? 'Request Your Proposal' : 'Demandez Votre Devis'}
-                  </h5>
-                  <p className="text-slate-400 text-xs md:text-sm max-w-xs">
-                     {lang === 'en' ? "Get a tailored plan for your facility." : "Obtenez un plan sur mesure."}
-                  </p>
-               </div>
-               <button 
-                 onClick={() => { onClose(); navigate('/contact'); }}
-                 className="group relative z-10 bg-sky-500 text-white px-8 py-4 rounded-xl font-bold text-base md:text-lg hover:bg-sky-400 transition-all flex items-center justify-center gap-3 shadow-lg"
-               >
-                 {lang === 'en' ? 'Get a Quote' : 'Devis Rapide'}
-                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-               </button>
-            </div>
-          </div>
-        </div>
+    <section id={id} className="pt-32 scroll-mt-32">
+      <div className="mb-16">
+        <div className={`w-20 h-1.5 ${accentColor} mb-6 rounded-full`} />
+        <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter uppercase mb-4">{title}</h2>
+        <p className="text-xl text-slate-500 font-medium max-w-2xl">{subtitle}</p>
       </div>
-    </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {services.map((service, idx) => {
+          const IconComponent = (LucideIcons as any)[service.icon];
+          // Use specific high-quality search terms for different categories
+          const searchTerms: Record<string, string> = {
+            'Specialized': 'laboratory',
+            'Commercial': 'office',
+            'Industrial': 'factory',
+            'Residential': 'modern-living-room'
+          };
+          const term = searchTerms[service.category] || 'cleaning';
+          const imageUrl = `https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&q=80&w=800&sig=${service.id}`;
+
+          return (
+            <motion.div 
+              key={service.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              viewport={{ once: true }}
+              className="group bg-white rounded-[3rem] overflow-hidden shadow-xl border border-slate-100 hover:border-sky-500/30 transition-all duration-500 flex flex-col h-full"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img 
+                  src={imageUrl} 
+                  className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
+                  alt={t(service.title)}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800';
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                  <div className="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-sky-600">
+                    {t(service.category)}
+                  </div>
+                  <div className={`w-12 h-12 ${accentColor} rounded-2xl flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform`}>
+                    {IconComponent && <IconComponent className="w-6 h-6 text-white" />}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-10 flex flex-col flex-grow">
+                <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight group-hover:text-sky-600 transition-colors">
+                  {t(service.title)}
+                </h3>
+                <p className="text-slate-500 text-sm leading-relaxed mb-8 line-clamp-3">
+                  {t(service.description)}
+                </p>
+
+                <div className="space-y-4 mb-8">
+                   {service.includedTasks[lang].slice(0, 2).map((task, i) => (
+                     <div key={i} className="flex items-center gap-3 text-xs font-bold text-slate-400">
+                       <CheckCircle className="w-4 h-4 text-sky-500" />
+                       {task}
+                     </div>
+                   ))}
+                </div>
+
+                <div className="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
+                  <button 
+                    onClick={() => onOpenSpecs(service)}
+                    className="text-xs font-black text-sky-600 uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all hover:text-sky-800"
+                  >
+                    Full Specs <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <ExternalLink className="w-4 h-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </section>
   );
 };
 
 const ServicesPage: React.FC = () => {
-  const containerRef = useScrollReveal();
   const { lang, t } = useTranslation();
   const [selectedService, setSelectedService] = useState<Service | null>(null);
 
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelectedService(null); };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, []);
+  const commercialServices = SERVICES.filter(s => s.category === 'Commercial');
+  const industrialServices = SERVICES.filter(s => s.category === 'Industrial' && !['sew-1', 'sew-2', 'sew-3', 'sew-4'].includes(s.id));
+  const specializedServices = SERVICES.filter(s => s.category === 'Specialized');
+  const sewageServices = SERVICES.filter(s => ['sew-1', 'sew-2', 'sew-3', 'sew-4'].includes(s.id));
 
-  useEffect(() => {
-    if (selectedService) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'unset';
-  }, [selectedService]);
+  const divisions = [
+    { name: lang === 'en' ? 'Commercial' : 'Commerciale', id: 'commercial', color: 'bg-sky-500' },
+    { name: lang === 'en' ? 'Industrial' : 'Industrielle', id: 'industrial', color: 'bg-indigo-500' },
+    { name: lang === 'en' ? 'Specialized' : 'Spécialisée', id: 'specialized', color: 'bg-emerald-500' },
+    { name: lang === 'en' ? 'Sewage' : 'Assainissement', id: 'sewage', color: 'bg-amber-500' },
+  ];
+
+  const closeModal = () => setSelectedService(null);
 
   return (
-    <div className="bg-white page-entrance" ref={containerRef}>
+    <div className="bg-slate-50 min-h-screen">
       <PageHeader 
-        title={lang === 'en' ? "Elite Cleaning Portfolio" : "Nos Solutions d'Élite"} 
-        subtitle={lang === 'en' ? "Discover the full range of professional hygiene services across West Africa." : "Découvrez la gamme complète de services d'hygiène professionnelle."}
-        imageUrl="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=1200"
+        title={lang === 'en' ? "Service Divisions" : "Divisions de Service"} 
+        subtitle={lang === 'en' ? "17 specialized solutions powering West Africa's leading industries." : "17 solutions spécialisées au service des plus grandes industries d'Afrique de l'Ouest."}
+        imageUrl="https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&q=80&w=1920"
       />
 
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
-          {SERVICES.map((service, index) => {
-            const isEven = index % 2 === 0;
-            const IconComponent = (LucideIcons as any)[service.icon];
-            
-            return (
-              <div key={service.id} className={`reveal flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-16 items-center`}>
-                <div className="lg:w-1/2 space-y-8">
-                  <div className="inline-flex items-center gap-2 bg-sky-50 text-sky-600 px-5 py-2 rounded-xl font-black text-xs uppercase tracking-widest border border-sky-100">
-                    <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
-                    {service.category} Category
+      {/* Division Navigation */}
+      <div className="sticky top-20 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex overflow-x-auto no-scrollbar py-4 gap-4 md:justify-center">
+            {divisions.map((div) => (
+              <a 
+                key={div.id}
+                href={`#${div.id}`}
+                className="whitespace-nowrap flex items-center gap-3 px-6 py-2 rounded-full border border-slate-200 font-black text-xs uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all shadow-sm"
+              >
+                <div className={`w-2 h-2 rounded-full ${div.color}`} />
+                {div.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 pb-32">
+        <CategorySection 
+          id="commercial"
+          title={lang === 'en' ? "Commercial Division" : "Division Commerciale"} 
+          subtitle={lang === 'en' ? "Elite office and retail sanitation protocols for public and private institutions." : "Protocoles d'élite pour les institutions publiques et privées."}
+          services={commercialServices}
+          accentColor="bg-sky-500"
+          onOpenSpecs={setSelectedService}
+        />
+        
+        <CategorySection 
+          id="industrial"
+          title={lang === 'en' ? "Industrial Division" : "Division Industrielle"} 
+          subtitle={lang === 'en' ? "Heavy-duty restoration for manufacturing, logistics, and aviation hubs." : "Restauration intensive pour les usines, la logistique et l'aviation."}
+          services={industrialServices}
+          accentColor="bg-indigo-500"
+          onOpenSpecs={setSelectedService}
+        />
+
+        <CategorySection 
+          id="specialized"
+          title={lang === 'en' ? "Specialized Division" : "Division Spécialisée"} 
+          subtitle={lang === 'en' ? "Revolutionary tech-driven services: Drones, Clinics, and Cleanrooms." : "Services technologiques : Drones, Cliniques et Salles Blanches."}
+          services={specializedServices}
+          accentColor="bg-emerald-500"
+          onOpenSpecs={setSelectedService}
+        />
+
+        <CategorySection 
+          id="sewage"
+          title={lang === 'en' ? "Sewage Management" : "Gestion des Eaux Usées"} 
+          subtitle={lang === 'en' ? "Our Circular Economy core: Transforming raw waste into renewable domestic energy." : "Économie Circulaire : Transformer les déchets en énergie renouvelable."}
+          services={sewageServices}
+          accentColor="bg-amber-500"
+          onOpenSpecs={setSelectedService}
+        />
+      </div>
+
+      {/* Service Detail Modal */}
+      <AnimatePresence>
+        {selectedService && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+              className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[60] flex items-center justify-center p-4 md:p-8"
+            />
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 40 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 40 }}
+              className="fixed inset-4 md:inset-x-20 md:inset-y-12 bg-white z-[61] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col md:flex-row"
+            >
+              <button 
+                onClick={closeModal}
+                className="absolute top-6 right-6 p-3 bg-slate-100 hover:bg-sky-500 hover:text-white rounded-full transition-all z-[62]"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              {/* Modal Left - Branding & Context */}
+              <div className="w-full md:w-1/3 bg-slate-50 relative flex flex-col">
+                <div className="relative h-2/3 overflow-hidden">
+                  <img 
+                    src={`https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&q=80&w=800&sig=${selectedService.id}`}
+                    className="w-full h-full object-cover grayscale-[0.2]"
+                    alt={t(selectedService.title)}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-sky-950/90 to-transparent flex flex-col justify-end p-12 text-white">
+                    <div className="bg-sky-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-xl">
+                      {React.createElement((LucideIcons as any)[selectedService.icon] || Zap, { className: "w-8 h-8 text-white" })}
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-black tracking-tighter mb-2 leading-none">{t(selectedService.title)}</h2>
+                    <p className="text-sky-300 font-bold uppercase tracking-[0.2em] text-[10px]">{t(selectedService.category)} Division</p>
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">{t(service.title)}</h2>
-                  <p className="text-xl text-slate-600 leading-relaxed line-clamp-3">
-                    {t(service.description)}
-                  </p>
+                </div>
+                
+                <div className="flex-grow p-12 bg-slate-900 text-white flex flex-col justify-center space-y-4">
+                   <div className="flex items-start gap-4">
+                     <div className="w-8 h-8 rounded-lg bg-sky-500/20 flex items-center justify-center flex-shrink-0">
+                       <Shield className="w-4 h-4 text-sky-400" />
+                     </div>
+                     <div>
+                       <h5 className="text-xs font-black uppercase tracking-widest text-sky-400 mb-1">Standard Guarantee</h5>
+                       <p className="text-sm text-slate-300">Certified ISO-compliant sanitation with 100% bonded liability protection.</p>
+                     </div>
+                   </div>
+                </div>
+              </div>
+
+              {/* Modal Right - The Content */}
+              <div className="flex-grow p-8 md:p-20 overflow-y-auto no-scrollbar bg-white">
+                <div className="max-w-3xl space-y-16">
                   
-                  <div className="flex flex-wrap gap-4 pt-4">
-                    <button 
-                      onClick={() => setSelectedService(service)}
-                      className="group inline-flex items-center gap-4 bg-sky-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-sky-700 transition-all shadow-lg"
-                    >
-                      {lang === 'en' ? 'Consult Service' : 'Consulter Détails'}
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                    </button>
-                    <Link 
-                      to="/contact" 
-                      className="inline-flex items-center gap-4 bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg"
-                    >
-                      {lang === 'en' ? 'Inquire Now' : 'S\'informer'}
+                  {/* Section: Deep Overview */}
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                       <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center">
+                         <Zap className="w-4 h-4 text-sky-600" />
+                       </div>
+                       <h3 className="text-sky-600 font-black tracking-widest uppercase text-xs">Deep Overview</h3>
+                    </div>
+                    <p className="text-2xl text-slate-800 leading-relaxed font-semibold tracking-tight">
+                      {t(selectedService.detailedDescription)}
+                    </p>
+                    {selectedService.whyMatters && (
+                      <div className="p-6 bg-slate-50 border-l-4 border-sky-500 rounded-r-2xl flex gap-4 items-start">
+                        <Info className="w-6 h-6 text-sky-500 mt-1 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-black text-slate-900 text-sm uppercase tracking-widest mb-1">Why it matters</h4>
+                          <p className="text-slate-600 text-lg leading-relaxed">{t(selectedService.whyMatters)}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Section: Technicals */}
+                  <div className="grid md:grid-cols-2 gap-12 pt-8 border-t border-slate-50">
+                    <div className="space-y-6">
+                      <h4 className="text-slate-900 font-black text-xs uppercase tracking-widest flex items-center gap-2">
+                        <ListChecks className="w-5 h-5 text-sky-500" /> Deliverables
+                      </h4>
+                      <ul className="space-y-4">
+                        {selectedService.includedTasks[lang].map((task, i) => (
+                          <li key={i} className="flex items-start gap-3 text-slate-500 font-bold text-sm">
+                            <CheckCircle className="w-5 h-5 text-sky-500 flex-shrink-0 mt-0.5" />
+                            {task}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="space-y-6">
+                      <h4 className="text-slate-900 font-black text-xs uppercase tracking-widest flex items-center gap-2">
+                        <Shield className="w-5 h-5 text-sky-500" /> Compliance
+                      </h4>
+                      <ul className="space-y-4">
+                        {selectedService.specifications[lang].map((spec, i) => (
+                          <li key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-slate-500 font-bold text-sm">
+                            {spec}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="pt-16 border-t border-slate-100 flex flex-col sm:flex-row gap-6 items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Status: Active Service</p>
+                      <p className="text-slate-900 font-black text-lg tracking-tight">Available in Abidjan & Dakar hubs.</p>
+                    </div>
+                    <Link to="/contact" className="bg-sky-500 text-white px-12 py-6 rounded-3xl font-black text-sm hover:bg-slate-900 transition-all shadow-2xl shadow-sky-500/20 active:scale-95 text-center">
+                      REQUEST FULL QUOTE
                     </Link>
                   </div>
                 </div>
-
-                <div className="lg:w-1/2 w-full reveal cursor-pointer group" onClick={() => setSelectedService(service)}>
-                  <div className="aspect-[16/10] bg-slate-100 rounded-[2.5rem] overflow-hidden shadow-2xl relative diamond-polish transition-all duration-700">
-                    <img 
-                      src={`https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&q=80&w=800&sig=${service.id}`} 
-                      alt={t(service.title)}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-slate-900/10 mix-blend-multiply transition-opacity opacity-60 group-hover:opacity-20"></div>
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-                      <div className="bg-white text-sky-950 px-8 py-4 rounded-full font-bold shadow-2xl flex items-center gap-4 border border-white/50">
-                        <div className="w-10 h-10 bg-sky-600 text-white rounded-lg flex items-center justify-center">
-                          {IconComponent && <IconComponent className="w-6 h-6" />}
-                        </div>
-                        <span className="text-lg uppercase tracking-wider">{lang === 'en' ? 'More Info' : 'Voir Plus'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
-            );
-          })}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Dynamic CTA */}
+      <section className="bg-slate-900 py-32 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-8">
+            Don't see exactly what you <span className="text-sky-500">need?</span>
+          </h2>
+          <p className="text-xl text-slate-400 mb-12">
+            We create bespoke hygiene blueprints for enterprises with unique architectural or operational requirements.
+          </p>
+          <Link to="/contact" className="inline-block bg-sky-500 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-sky-400 transition-all shadow-2xl shadow-sky-500/20">
+            REQUEST CUSTOM BLUEPRINT
+          </Link>
+        </div>
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          <div className="bubble w-96 h-96 -top-20 -left-20 bg-sky-500/10"></div>
+          <div className="bubble w-64 h-64 bottom-0 right-0 bg-sky-500/20"></div>
         </div>
       </section>
-
-      {selectedService && (
-        <ServiceModal 
-          service={selectedService} 
-          onClose={() => setSelectedService(null)} 
-        />
-      )}
     </div>
   );
 };

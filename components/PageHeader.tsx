@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-import { useTranslation } from '../App';
+import { useTranslation } from '../LanguageContext.tsx';
 
 interface PageHeaderProps {
   title: string;
@@ -29,13 +28,13 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle, imageUrl }) =>
       )}
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
-        <div className="flex items-center gap-2 text-sky-300 text-sm mb-6 animate-wipe">
+        <div className="flex items-center gap-2 text-sky-300 text-sm mb-6">
           <Link to="/" className="hover:text-white transition-colors">{lang === 'en' ? 'Home' : 'Accueil'}</Link>
           <ChevronRight className="w-4 h-4" />
           <span className="text-white font-medium">{title}</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight animate-wipe">{title}</h1>
-        <p className="text-xl md:text-2xl text-sky-100 max-w-2xl leading-relaxed animate-wipe delay-100">
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">{title}</h1>
+        <p className="text-xl md:text-2xl text-sky-100 max-w-2xl leading-relaxed">
           {subtitle}
         </p>
       </div>

@@ -1,8 +1,7 @@
-
 import React from 'react';
-import PageHeader from '../components/PageHeader';
-import { Mail, Phone, MapPin, Clock, Send, MessageSquare } from 'lucide-react';
-import { useTranslation } from '../App';
+import PageHeader from '../components/PageHeader.tsx';
+import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { useTranslation } from '../LanguageContext.tsx';
 
 const ContactPage: React.FC = () => {
   const { lang } = useTranslation();

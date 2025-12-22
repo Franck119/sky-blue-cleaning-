@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Calculator as CalcIcon, MoveRight, Info, Sparkles } from 'lucide-react';
 
 const BubbleBackground: React.FC = () => {
@@ -153,14 +153,17 @@ const Calculator: React.FC = () => {
                 </div>
               </div>
 
-              <button className="btn-shine w-full bg-white text-sky-900 hover:bg-sky-50 font-bold py-5 rounded-2xl flex items-center justify-center gap-3 transition-all transform hover:scale-[1.03]">
+              <Link 
+                to="/contact" 
+                className="btn-shine w-full bg-white text-sky-900 hover:bg-sky-50 font-bold py-5 rounded-2xl flex items-center justify-center gap-3 transition-all transform hover:scale-[1.03]"
+              >
                 Book This Service
                 <MoveRight className="w-5 h-5" />
-              </button>
+              </Link>
 
               <div className="mt-8 text-center">
                 <p className="text-sky-300 text-sm">Need a multi-site quote?</p>
-                <a href="#contact" className="text-white font-bold hover:underline">Contact Enterprise Sales</a>
+                <Link to="/contact" className="text-white font-bold hover:underline">Contact Enterprise Sales</Link>
               </div>
             </div>
           </div>

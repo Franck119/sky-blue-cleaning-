@@ -3,116 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SkyBlue Cleaning | Premier Cleaning Solutions West Africa</title>
+    <title>SkyBlue Cleaning | The Gold Standard of Hygiene</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <script>
+      window.process = { env: { NODE_ENV: 'production' } };
+    </script>
     <style>
+      :root {
+        --sky-blue: #0ea5e9;
+        --gold: #D4AF37;
+        --midnight: #020617;
+        --slate-dark: #0f172a;
+      }
       body {
         font-family: 'Inter', sans-serif;
+        background-color: var(--midnight);
+        color: white;
         scroll-behavior: smooth;
         overflow-x: hidden;
-        background-color: white;
       }
+      .serif { font-family: 'Playfair Display', serif; }
       
-      /* Robust Reveal Animation */
+      .luxury-glass {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .luxury-gradient {
+        background: radial-gradient(circle at top left, rgba(14, 165, 233, 0.08), transparent 40%),
+                    radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.05), transparent 40%);
+      }
+
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
       .reveal {
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        will-change: opacity, transform;
+        transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .reveal.active {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-      }
-
-      /* Staggered Delay Helpers */
-      .delay-100 { transition-delay: 100ms; }
-      .delay-200 { transition-delay: 200ms; }
-      .delay-300 { transition-delay: 300ms; }
-
-      /* Diamond Polish Effect */
-      .diamond-polish {
-        position: relative;
-        overflow: hidden;
-      }
-      .diamond-polish::after {
-        content: '';
-        position: absolute;
-        top: 0; left: -150%;
-        width: 100%; height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-        transform: skewX(-20deg);
-        transition: 0.8s;
-      }
-      .diamond-polish:hover::after {
-        left: 150%;
-      }
-
-      /* Squeegee Wipe Effect */
-      @keyframes squeegeeMove {
-        0% { left: -100%; }
-        100% { left: 100%; }
-      }
-      .squeegee-wipe {
-        position: absolute;
-        top: 0; bottom: 0; width: 100%;
-        background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), #0ea5e9, rgba(255,255,255,0.8), transparent);
-        z-index: 50;
-        pointer-events: none;
-        opacity: 0;
-      }
-      .squeegee-active {
         opacity: 1;
-        animation: squeegeeMove 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        transform: translateY(0);
       }
 
-      /* Wipe Entrance Animation */
-      @keyframes wipeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .animate-wipe {
-        animation: wipeIn 0.4s ease-out forwards;
-      }
-
-      /* Custom Scrollbar for Modal */
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: #f8fafc;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #0ea5e9;
-        border-radius: 10px;
-      }
-
-      /* Page Entrance */
-      .page-entrance {
-        animation: pageFade 0.5s ease-out forwards;
-      }
-      @keyframes pageFade {
-        from { opacity: 0; }
-        to { opacity: 1; }
+      .gold-text {
+        background: linear-gradient(to right, #fde047, #d4af37, #fde047);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% auto;
       }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@7.1.1?external=react,react-dom",
+    "lucide-react": "https://esm.sh/lucide-react@0.475.0?external=react",
+    "framer-motion": "https://esm.sh/framer-motion@11.18.2?external=react,react-dom",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
     "vite": "https://esm.sh/vite@^7.3.0",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
-</head>
-  <body>
+  </head>
+  <body class="luxury-gradient">
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

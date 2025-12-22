@@ -1,81 +1,74 @@
-
 import React from 'react';
-import { useTranslation } from '../App';
-import { CheckCircle2 } from 'lucide-react';
+import { useTranslation } from '../LanguageContext.tsx';
+import { Award, Zap, ShieldCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const About: React.FC = () => {
-  const { lang, t } = useTranslation();
-
-  const bulletPoints = [
-    { en: "Bonded, Licensed & Insured for your protection", fr: "Garanti, licencié et assuré pour votre protection" },
-    { en: "Customizable cleaning packages to fit your budget", fr: "Forfaits de nettoyage personnalisables selon votre budget" },
-    { en: "Professional grade equipment and eco-solutions", fr: "Équipement de qualité professionnelle et éco-solutions" },
-    { en: "Thoroughly vetted and background-checked staff", fr: "Personnel minutieusement vérifié et contrôlé" }
-  ];
+  const { t } = useTranslation();
 
   return (
-    <section id="about" className="py-24 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6 animate-wipe">
-            <h2 className="text-sky-600 font-bold tracking-widest uppercase text-sm">
-              {lang === 'en' ? 'Who We Are' : 'Qui Sommes-Nous'}
-            </h2>
-            <h3 className="text-4xl font-bold text-slate-900 leading-tight">
-              {lang === 'en' ? 'Professional Cleaning Services You Can Trust' : 'Services de Nettoyage Professionnels en qui Vous Pouvez Avoir Confiance'}
-            </h3>
-            <p className="text-lg text-slate-600 leading-relaxed">
-              {lang === 'en' 
-                ? "SkyBlue Cleaning provides top-tier cleaning solutions for commercial and residential clients throughout Abidjan and the wider ECOWAS region. Our mission is to provide high-quality services for our valued clients." 
-                : "SkyBlue Cleaning fournit des solutions de nettoyage de premier plan pour les clients commerciaux et résidentiels à Abidjan et dans la région de la CEDEAO."}
-            </p>
-            <p className="text-lg text-slate-600 leading-relaxed">
-              {lang === 'en'
-                ? "Our team goes above and beyond to cater to each project’s specific needs. Through open communication and exceptional service, we hope you’ll find what you’re looking for with our professional cleaning company."
-                : "Notre équipe se surpasse pour répondre aux besoins spécifiques de chaque projet. Grâce à une communication ouverte et un service exceptionnel."}
-            </p>
-
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-6">
-              {bulletPoints.map((point, i) => (
-                <li key={i} className="flex items-center gap-3 text-slate-700 font-medium">
-                  <CheckCircle2 className="w-5 h-5 text-sky-500 flex-shrink-0" />
-                  {t(point)}
-                </li>
-              ))}
-            </ul>
-
-            <div className="pt-4 grid grid-cols-2 gap-4">
-              <div className="p-4 bg-sky-50 rounded-xl hover:bg-sky-100 transition-colors cursor-default border border-sky-100">
-                <div className="text-sky-600 font-bold text-xl mb-1">
-                  {lang === 'en' ? '24/7 Support' : 'Support 24/7'}
-                </div>
-                <p className="text-slate-500 text-sm">
-                  {lang === 'en' ? 'Always available for emergency responses.' : 'Toujours disponible pour les urgences.'}
-                </p>
-              </div>
-              <div className="p-4 bg-sky-50 rounded-xl hover:bg-sky-100 transition-colors cursor-default border border-sky-100">
-                <div className="text-sky-600 font-bold text-xl mb-1">
-                  {lang === 'en' ? 'Quality Guarantee' : 'Garantie Qualité'}
-                </div>
-                <p className="text-slate-500 text-sm">
-                  {lang === 'en' ? 'Not satisfied? We re-clean for free.' : 'Pas satisfait ? On re-nettoie gratuitement.'}
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="relative group">
-            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl relative border-8 border-white">
+    <section id="about" className="py-40 bg-sky-900/10 backdrop-blur-md relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-32 items-center">
+          <div className="relative">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1.5 }}
+              className="aspect-[4/5] rounded-[5rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] border border-white/10"
+            >
               <img 
-                src="https://images.unsplash.com/photo-1581578731548-c64695ce6958?auto=format&fit=crop&q=80&w=800" 
-                alt="SkyBlue Cleaning Professional Team" 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=800" 
+                alt="SkyBlue Professionalism" 
+                className="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-1000"
               />
-              <div className="absolute inset-0 bg-sky-900/10 mix-blend-multiply"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="absolute -right-12 -bottom-12 bg-[#0f172a] p-12 rounded-[4rem] shadow-2xl border border-white/10 backdrop-blur-3xl"
+            >
+              <div className="bg-sky-500 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-2xl shadow-sky-500/30">
+                <ShieldCheck className="text-white w-6 h-6" />
+              </div>
+              <h4 className="text-3xl font-black text-white mb-2 serif italic">Excellence.</h4>
+              <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.3em]">Institutional Heritage.</p>
+            </motion.div>
+          </div>
+
+          <div className="space-y-16">
+            <div className="space-y-8">
+              <h2 className="text-sky-600 font-black tracking-[0.5em] uppercase text-[10px]">Our DNA</h2>
+              <h3 className="text-7xl md:text-8xl font-black text-sky-950 leading-[0.8] tracking-tighter serif">
+                Defining <br /> <span className="text-sky-900 italic">Purity.</span>
+              </h3>
+              <p className="text-2xl text-sky-900 leading-relaxed font-light">
+                SkyBlue represents the apex of environmental maintenance in West Africa. We curate perfection for the region's leading institutions.
+              </p>
             </div>
-            <div className="absolute -bottom-8 -left-8 bg-sky-600 text-white p-8 rounded-[2rem] shadow-2xl hidden lg:block transform group-hover:translate-y-[-10px] transition-all border-4 border-white">
-              <p className="text-3xl font-bold">100%</p>
-              <p className="text-sky-100 font-medium tracking-widest uppercase text-xs">Reliability Score</p>
+
+            <div className="grid sm:grid-cols-2 gap-12">
+              {[
+                { icon: Award, title: "Artisan Staff", desc: "Every technician is a certified master of surgical sanitation." },
+                { icon: Zap, title: "Stealth Ops", desc: "Discreet operations ensuring zero business disruption." }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ y: 20, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 + i * 0.2 }}
+                  className="space-y-6"
+                >
+                  <div className="w-16 h-16 bg-sky-900/10 rounded-[1.5rem] border border-sky-900/20 flex items-center justify-center text-sky-900">
+                    <item.icon size={28} />
+                  </div>
+                  <h4 className="text-xl font-black text-sky-950 serif italic">{item.title}</h4>
+                  <p className="text-sky-900/70 text-sm leading-relaxed font-medium">{item.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>

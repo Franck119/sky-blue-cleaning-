@@ -1,11 +1,10 @@
-
 import React from 'react';
 import * as LucideIcons from 'lucide-react';
-import PageHeader from '../components/PageHeader';
-import { BENEFITS } from '../constants';
-import { useScrollReveal } from '../hooks/useScrollReveal';
-import { useTranslation } from '../App';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import PageHeader from '../components/PageHeader.tsx';
+import { BENEFITS } from '../constants.tsx';
+import { useScrollReveal } from '../hooks/useScrollReveal.ts';
+import { useTranslation } from '../LanguageContext.tsx';
+import { CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const BenefitsPage: React.FC = () => {

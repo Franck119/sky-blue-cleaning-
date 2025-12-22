@@ -1,54 +1,70 @@
-
 import React from 'react';
-import { useTranslation } from '../App';
+import { useTranslation } from '../LanguageContext.tsx';
 import { Quote, Star } from 'lucide-react';
-import { TESTIMONIALS } from '../constants';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+import { TESTIMONIALS } from '../constants.tsx';
+import { motion } from 'framer-motion';
 
 const Testimonials: React.FC = () => {
   const { lang, t } = useTranslation();
-  const containerRef = useScrollReveal();
 
   return (
-    <section ref={containerRef} className="py-24 bg-sky-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 reveal">
-          <h2 className="text-sky-600 font-bold tracking-widest uppercase text-sm mb-4">
-            {lang === 'en' ? 'Testimonials' : 'Témoignages'}
-          </h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-slate-900">
-            {lang === 'en' ? 'What Our Clients Say' : 'Ce Que Disent Nos Clients'}
-          </h3>
-        </div>
+    <section className="py-40 bg-[#050505] overflow-hidden border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6 mb-24 text-center">
+        <h2 className="text-sky-400 font-black tracking-[0.5em] uppercase text-[9px] mb-8">Testimonials</h2>
+        <h3 className="text-6xl md:text-8xl font-black text-white tracking-tighter serif leading-none">
+          Client <span className="italic">Voices.</span>
+        </h3>
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+      <div className="relative">
+        <div className="flex overflow-x-auto no-scrollbar gap-10 px-6 md:px-[15vw] pb-24 snap-x">
           {TESTIMONIALS.map((test, index) => (
-            <div key={test.id} className={`reveal delay-${(index + 1) * 200} bg-white p-12 rounded-[3rem] shadow-xl relative border border-white group hover:translate-y-[-5px] transition-all`}>
-              <div className="absolute -top-6 left-12 w-12 h-12 bg-sky-600 text-white rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
-                <Quote className="w-6 h-6" />
+            <motion.div 
+              key={test.id} 
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="flex-shrink-0 w-[85vw] md:w-[600px] luxury-glass p-16 rounded-[4rem] relative group snap-center border border-white/5"
+            >
+              <div className="absolute top-12 right-12 opacity-5 group-hover:opacity-10 transition-opacity">
+                <Quote size={80} className="text-sky-500" />
               </div>
               
-              <div className="flex gap-1 mb-6">
+              <div className="flex gap-1 mb-12">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  <Star key={i} className="w-3 h-3 fill-sky-500 text-sky-500" />
                 ))}
               </div>
 
-              <p className="text-xl text-slate-600 italic mb-8 leading-relaxed">
+              <p className="text-2xl md:text-3xl text-white/80 leading-relaxed font-light serif italic mb-16 min-h-[160px]">
                 "{t(test.text)}"
               </p>
 
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center font-bold text-sky-600">
+              <div className="flex items-center gap-6 pt-10 border-t border-white/5">
+                <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center font-black text-xl text-white/30 border border-white/10">
                   {test.name.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900">{test.name}</h4>
-                  <p className="text-sm text-slate-500">{test.role}</p>
+                  <h4 className="text-lg font-black text-white tracking-tight serif">{test.name}</h4>
+                  <p className="text-[9px] font-black uppercase tracking-[0.3em] text-sky-400 mt-1">{test.role}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
+          <div className="flex-shrink-0 w-32"></div> 
+        </div>
+
+        {/* Shadow Overlays for Seamless Scroll Effect */}
+        <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#050505] to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-48 bg-gradient-to-l from-[#050505] to-transparent pointer-events-none" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 mt-16 flex justify-center">
+        <div className="flex items-center gap-8 text-white/20">
+           <div className="h-[0.5px] w-32 bg-white/10" />
+           <span className="text-[9px] font-black uppercase tracking-[1em]">Slide to Explore</span>
+           <div className="h-[0.5px] w-32 bg-white/10" />
         </div>
       </div>
     </section>
