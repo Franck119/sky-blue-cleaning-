@@ -33,6 +33,33 @@
       #root {
         min-height: 100vh;
       }
+      .page-entrance {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .bubble {
+        position: absolute;
+        background: rgba(14, 165, 233, 0.1);
+        border-radius: 50%;
+        filter: blur(40px);
+        z-index: -1;
+        pointer-events: none;
+        animation: float 20s infinite linear;
+      }
+      @keyframes float {
+        0% { transform: translate(0, 0); }
+        50% { transform: translate(30px, -50px); }
+        100% { transform: translate(0, 0); }
+      }
+      .serif { font-family: 'Playfair Display', serif; }
+      .diamond-polish {
+        box-shadow: 0 0 50px rgba(14, 165, 233, 0.15);
+      }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
     <script type="importmap">
 {
